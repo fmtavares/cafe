@@ -1,0 +1,62 @@
+<!doctype html>
+<!-- doctype informa ao agente de usuario a versão do html que deve ser renderizada-->
+<html lang="pt-br">
+
+    <head>
+        <title> One9 Group </title>
+        <meta charset="utf-8">
+        <meta name="author" content="Fabio Tavares">
+        <meta name="description" content="Pagina de Aplicativos Fabio Tavares">
+        <meta name="keywords" content="html5, tecnologia">
+        <meta name="viewport" content="width=device-width">
+        <link rel="stylesheet" href="../static/css/estilo_cafe.css">
+    </head>
+
+    <body>
+            <header class="topo-pagina">
+                <nav>
+                    <ul>
+                        <li><a href="/cafe">Tomou?</a></li>
+                        <li><a href="/lista">Quem paga?</a></li>
+                    </ul>
+                </nav>
+                
+            </header>
+
+            <main class="bloco_central">
+                <section class="principal_lista">
+                            <div class="card_lista">
+                                <br>
+                                {% for item in r_soma_cafe %}
+                                <p class="f_lista">No total, foram tomados até o momento {{ item.v_quant }} cafés</p>
+                                {% endfor %}
+
+                            </div>
+
+                            <div class="card_lista">
+                                <p class="f_lista"> Nesse mês, temos a seguinte distribuição:</p>
+                                {% for item in r_consumo_mes_atual %}
+                                {{ item.display }} ja pagou {{item.quantidade}} cafés <br>
+                                {% endfor %}
+
+                            </div>
+
+                            <div class="card_lista">
+                                <p class="f_lista"> Para todo periodo, temos :</p>
+                                {% for item in r_consumo_total %}
+                                {{ item.display }} ja pagou {{item.quantidade}} cafés <br>
+                                {% endfor %}
+
+                            </div>
+                </section>                    
+            </main>
+
+            
+            <footer class="rodape-pagina">
+                <div> 
+                    <p><img src="../static/images/one9.webp" /></p>
+                </div>
+            </footer>
+        
+    </body>
+</html>

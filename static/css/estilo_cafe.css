@@ -1,0 +1,107 @@
+body{
+    font-family: arial;
+    background: white;
+    margin: 0;
+    padding: 0px;
+}
+
+.topo-pagina{
+    margin: 0px;
+    height: auto;
+    border: 1px solid rgba(181, 179, 179, 0.9);;
+    background: rgba(181, 179, 179, 0.9);
+    display: block;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+nav{
+    margin: auto;
+    width: 80%;
+    height: auto;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.topo-pagina nav li{
+    margin: 0;
+    text-align: center;
+    list-style: none;
+    padding-right: 10%;
+    display: inline-block;
+}
+
+.topo-pagina nav a{
+    color: #3c3c3c;
+    text-decoration: none;
+    text-transform: capitalize;
+    font-size: 15px;
+    letter-spacing: 3px;
+    transition: color 0.2s linear;
+    text-align: center;
+}
+
+.rodape-pagina{
+    margin-top: 50px;
+    text-align: center;
+    font-family: arial;
+    font-size: 8px;
+}
+
+.rodape-pagina img{
+    width: 30px;
+    margin: auto;
+}
+
+.bloco_central{
+    width: 80%;
+    margin: auto;
+    text-align: center;
+    font-family: arial;
+    font-size: 15px;
+}
+
+.bloco_central img{
+    width: 30%;
+}
+
+.f_quantidade{
+    width: 20%;
+    height: 25px;
+    border: 1px solid blue;
+    border-radius: 1em;
+    font-size: 14px;
+    text-align: center;
+}
+
+.f_display{
+    width: 70%;
+    height: 35px;
+    border: 1px solid blue;
+    border-radius: 1em;
+    font-size: 14px;
+    text-align: right;
+    margin-bottom: 20px;
+}
+
+.c_butao{
+    width: 150px;
+    margin: 0px auto 0px;
+    text-align: center;
+}
+
+.f_butao{
+    background: #5a5a52;
+    color: white;
+    height: 30px;
+    text-align: center;
+}
+
+.f_butao:hover{
+    background: #9a9a6b;
+}
+
+.f_lista{
+    font-weight: 600;
+    font-size: 15px;
+}

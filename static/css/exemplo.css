@@ -1,0 +1,217 @@
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo_cafe.css') }}">
+
+
+
+body{
+    font-family: arial;
+    background: white;
+    margin: 0;
+    padding: 0px;
+    
+    margin-bottom: 5px;
+}
+
+/**********************************************/
+/*Trecho destinada a parte superior da pagina */
+/**********************************************/
+
+/*
+.teste img{
+    position:fixed;
+    top: 5px;
+    left: 5px;
+    max-height: 35px;
+}
+*/
+
+.topo-pagina{
+    margin: 0px;
+    padding-top: 0px;
+    width: auto;
+    height: auto;
+    border: 1px solid rgba(181, 179, 179, 0.9);;
+    background: rgba(181, 179, 179, 0.9);;
+}
+
+nav{
+    background: rgba(181, 179, 179, 0.9);
+    padding-right: 50px;
+    margin: auto;
+    width: auto;
+    width: auto;
+    height: auto;
+    text-align: center;
+}
+
+.topo-pagina nav li{
+    display: inline-block;
+    padding: 0px;
+    list-style: none;
+    width: 20%;
+    margin-left: 0px;
+    text-align: center;
+}
+
+
+.topo-pagina nav a{
+    color: #3c3c3c;
+    text-decoration: none;
+    text-transform: capitalize;
+    font-size: 15px;
+    letter-spacing: 2px;
+    transition: color 0.2s linear;
+    margin-left: 0px;
+}
+
+.topo-pagina nav a:hover{
+    color: rgba(255, 98, 0, 0.8);    
+}
+
+main{
+    width: 100%;
+    margin: auto;
+    background-color: white;
+}
+
+/**********************************************/
+/*Trecho destinada a parte média da pagina    */
+/**********************************************/
+
+
+.bloco_cards {
+    width: 50%;
+    height: auto;
+    margin: auto;
+    #overflow: auto;
+}
+
+.card1 img {
+    width: 200px;
+    height: 150px;
+    margin: auto;
+    display: block;
+}
+
+form {
+    /* Apenas para centralizar o form na página */
+    margin: auto;
+    width: auto;
+    height: auto;
+    text-align: center;
+    /* Para ver as bordas do formulário */
+    padding: 1em 1em 1em 1em;;
+    border: 1px solid #ffffff;
+    border-radius: 1em;
+    box-sizing: border-box;
+    display: block;
+    border: 1px solid blue;
+}
+
+form div {
+   margin-bottom: 10px;
+}
+
+
+label {
+    /*Para ter certeza que todas as labels tem o mesmo tamanho e estão propriamente alinhadas */
+    display: inline-block;
+    width: 120px;
+    text-align: right;
+    font-size: 14px;
+    margin-left: 90px;
+}
+
+input:focus, textarea:focus {
+    border-color: #070606;
+    background: #ebc3b3;
+}
+
+.f_quantidade{
+    width: 40%;
+    height: 25px;
+    border: 1px solid blue;
+    border-radius: 1em;
+    font-size: 14px;
+    text-align: center;
+}
+
+.f_display{
+    width: 90%;
+    height: 35px;
+    border: 1px solid blue;
+    border-radius: 1em;
+    font-size: 14px;
+    text-align: right;
+}
+
+.c_butao{
+    width: 150px;
+    margin: 0px auto 0px;
+    text-align: center;
+}
+
+.f_butao{
+    background: #5a5a52;
+    color: white;
+    height: 30px;
+    text-align: center;
+}
+
+.f_butao:hover{
+    background: #9a9a6b;
+}
+
+.bloco_cafes{
+    margin: auto;
+    width: 80%;
+    text-align: center;
+}
+
+.card_soma{
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: sans-serif;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.card_lista{
+    font-family: sans-serif;
+    text-align: center;
+    font-size: 14px;
+    padding-bottom: 50px;
+}
+
+/**********************************************/
+/*Trecho destinada ao rodapé                  */
+/**********************************************/
+
+footer{
+    background: rgb(255, 255, 255);
+    text-align: center;
+    padding-top: 2px;
+    box-sizing: border-box;
+    height: 60px;
+}
+
+footer li{
+    display: inline-block;
+    list-style: none;
+    width: 50px;
+    height: 30px;
+}
+
+footer img{
+    max-height: 25px;
+}
+
+
+
+
+
+
+
+
+
+
