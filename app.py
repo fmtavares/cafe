@@ -1,6 +1,3 @@
-TESTE TESTE TESTE
-
-
 from flask import Flask, request, url_for, redirect, render_template, g
 import sqlite3
 
@@ -8,7 +5,7 @@ app = Flask(__name__)
 
 #
 # conexao com o banco
-#
+# configuracao correta 
 
 def connect_db():
     sql = sqlite3.connect('/Users/fabio/flask/data.db')
