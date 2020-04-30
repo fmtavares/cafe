@@ -1,3 +1,6 @@
+TESTE TESTE TESTE
+
+
 from flask import Flask, request, url_for, redirect, render_template, g
 import sqlite3
 
@@ -74,7 +77,7 @@ def cafe():
         r_consumo_mes_atual = cur.fetchall()
         
         cur = db.execute('select a.cpf cpf, b.display display, sum(a.quantidade) quantidade from conta_cafe a, pagador b where a.cpf = b.cpf group by a.cpf order by a.quantidade;')
-        results2 = cur.fetchall()
+        r_consumo_total = cur.fetchall()
         
         return render_template('lista_cafe.html', r_soma_cafe=r_soma_cafe, r_consumo_mes_atual=r_consumo_mes_atual, r_consumo_total=r_consumo_total)
 
