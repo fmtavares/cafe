@@ -9,7 +9,7 @@
         <meta name="description" content="Pagina de Aplicativos Fabio Tavares">
         <meta name="keywords" content="html5, tecnologia">
         <meta name="viewport" content="width=device-width">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo_cafe.css') }}">
+        <link rel="stylesheet" href="../static/css/estilo_cafe.css">
     </head>
 
     <body>
@@ -25,8 +25,26 @@
 
             <main class="bloco_central">
                 <div>
-                    <p>TESTE PAGINA</p>
-                    {% block bloco_principal %}{% endblock %}            
+                   
+                <form action="/inicio" method="POST" class="f_form">
+                    <div>
+                        <select class="f_nome_chave" id="v_nome_chave" name="v_nome_chave">
+                            {% for item in r_lista_projetos %}
+                            <option value={{item.nome_chave}}>{{ item.nome_chave }}</option>
+                            {% endfor %}
+                        </select>                                  
+                    </div>
+                    
+                    <div>
+                        <input class="f_senha" type="text" id="v_senha" name="v_senha" />
+                    </div>
+                    
+                    <div class="c_butao">
+                        <br>
+                        <button type="submit" class="f_butao"> OK </button>
+                    </div>
+                </form>  
+                    
                 </div>
             </main>
 

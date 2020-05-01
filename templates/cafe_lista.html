@@ -1,0 +1,57 @@
+<!doctype html>
+<!-- doctype informa ao agente de usuario a versão do html que deve ser renderizada-->
+<html lang="pt-br">
+
+    <head>
+        <title> One9 Group </title>
+        <meta charset="utf-8">
+        <meta name="author" content="Fabio Tavares">
+        <meta name="description" content="Pagina de Aplicativos Fabio Tavares">
+        <meta name="keywords" content="html5, tecnologia">
+        <meta name="viewport" content="width=device-width">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo_cafe.css') }}">
+    </head>
+
+    <body>
+            <header class="topo-pagina">
+                <nav>
+                    <ul>
+                        <li><a href="/cafe_inserir">Tomou?</a></li>
+                        <li><a href="/cafe_lista">Quem paga?</a></li>
+                    </ul>
+                </nav>
+                
+            </header>
+
+            <main class="bloco_central">
+                <section class="principal_lista">
+                            <div class="card_lista">
+                                <br>
+                                <p class="f_titulo_soma"> No periodo bebemos {{ r_soma_periodo['soma'] }} e no total {{ r_soma_total['soma'] }} cafés</p>
+                            </div>
+                    
+                            <div class="card_lista">
+                                <p class="f_lista"> Nesse mês, temos a seguinte distribuição:</p>
+                                    {% for item in r_distribuicao_mes %}
+                                    {{ item.display }} ja pagou {{item.quantidade}} cafés <br>
+                                    {% endfor %}
+                            </div>      
+                            <div class="card_lista">
+                                <p class="f_lista"> Nesse total, temos a seguinte distribuição:</p>
+                                    {% for item in r_distribuicao_total %}
+                                    {{ item.display }} ja pagou {{item.quantidade}} cafés <br>
+                                    {% endfor %}
+                            </div>                   
+                </section>        
+                
+            </main>
+
+            
+            <footer class="rodape-pagina">
+                <div> 
+                    <p><img src="../static/images/one9.webp" /></p>
+                </div>
+            </footer>
+        
+    </body>
+</html>
