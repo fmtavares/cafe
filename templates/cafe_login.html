@@ -16,8 +16,14 @@
             <header class="topo-pagina">
                 <nav>
                     <ul>
-                        <li><a href="/cafe">Tomou?</a></li>
-                        <li><a href="/cafe_lista">Quem paga?</a></li>
+                        {% if not user %}
+                            <li><a href="/">Login</a></li>
+                        {% endif %}
+                        <li><a href="/cafe_inserir">Tomou?</a></li>
+                        <li><a href="/cafe_lista">Quem?</a></li>
+                        {% if user %}
+                            <li class="f_logout"><a href="/logout">Logout</a></li>
+                        {% endif %}
                     </ul>
                 </nav>
                 

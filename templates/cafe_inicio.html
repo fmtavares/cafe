@@ -16,8 +16,14 @@
             <header class="topo-pagina">
                 <nav>
                     <ul>
+                        {% if not user %}
+                            <li><a href="/">Login</a></li>
+                        {% endif %}
                         <li><a href="/cafe_inserir">Tomou?</a></li>
-                        <li><a href="/cafe_lista">Quem paga?</a></li>
+                        <li><a href="/cafe_lista">Quem?</a></li>
+                        {% if user %}
+                            <li><a href="/logout">Logout</a></li>
+                        {% endif %}
                     </ul>
                 </nav>
                 
@@ -36,11 +42,11 @@
                             </select>                                  
                         </div>
                         <div>
-                            <input type="text" id="v_pagador" name="v_pagador" class="f_display_usuario" />
+                            <input type="text" id="v_pagador" name="v_pagador" placeholder="digite usuário" class="f_display_usuario" />
                         </div>
                           
                         <div>
-                            <input type="text" id="v_senha" name="v_senha" class="f_display_senha" />
+                            <input type="text" id="v_senha" name="v_senha" placeholder="digite a senha" class="f_display_senha" />
                         </div>                          
                           
                         <div class="c_butao">

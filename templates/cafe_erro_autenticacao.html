@@ -16,18 +16,22 @@
             <header class="topo-pagina">
                 <nav>
                     <ul>
-                        <li><a href="/cafe">Tomou?</a></li>
-                        <li><a href="/lista">Quem paga?</a></li>
+                        <li><a href="/">Login</a></li>
+                        <li><a href="/cafe_inserir">Tomou?</a></li>
+                        <li><a href="/cafe_lista">Quem?</a></li>
                     </ul>
                 </nav>
                 
             </header>
 
             <main class="bloco_central">
+                                
+                  <section class="principal_cafe">
+                      
+                      <p>Usuario ou Senha não confere, tente novamente! </p>
+                      
+                </section>                    
                 
-                {% if user %}
-                    <p> Usuario: {{user}} do projeto {{projeto}} </p>
-                {% endif %}
             </main>
 
             

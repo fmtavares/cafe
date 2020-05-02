@@ -16,14 +16,9 @@
             <header class="topo-pagina">
                 <nav>
                     <ul>
-                        {% if not user %}
-                            <li><a href="/">Login</a></li>
-                        {% endif %}
+                        <li><a href="/">Login</a></li>
                         <li><a href="/cafe_inserir">Tomou?</a></li>
                         <li><a href="/cafe_lista">Quem?</a></li>
-                        {% if user %}
-                            <li class="f_logout"><a href="/logout">Logout</a></li>
-                        {% endif %}
                     </ul>
                 </nav>
                 
@@ -31,17 +26,9 @@
 
             <main class="bloco_central">
                                 
-                <section class="principal_cafe">
-
-                <p> Voce é adminsitrador do projeto {{projeto}} </p>    
-                
-                <br>
-                    
-                <a href="/cafe_list_user">Administrar Usuários</a>
-                
-                <br>
-                    
-                <a href="/cafe_add_user">Incluir Usuários</a>                  
+                  <section class="principal_cafe">
+                      
+                      <p>Não esta autencicado, precisa logar </p>
                       
                 </section>                    
                 

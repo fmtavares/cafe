@@ -15,40 +15,47 @@
     <body>
             <header class="topo-pagina">
                 <nav>
-                    <ul>
                         {% if not user %}
                             <li><a href="/">Login</a></li>
                         {% endif %}
                         <li><a href="/cafe_inserir">Tomou?</a></li>
                         <li><a href="/cafe_lista">Quem?</a></li>
                         {% if user %}
-                            <li class="f_logout"><a href="/logout">Logout</a></li>
+                            <li><a href="/logout">Logout</a></li>
                         {% endif %}
-                    </ul>
                 </nav>
                 
             </header>
 
             <main class="bloco_central">
-                <section class="principal_lista">
-                            <div class="card_lista">
-                                <br>
-                                <p class="f_titulo_soma"> No periodo bebemos {{ r_soma_periodo['soma'] }} e no total {{ r_soma_total['soma'] }} cafés</p>
-                            </div>
+                
+                <div class="card_lista">
+                    <p class="f_lista"> Lista dos Usuários do seu Group Admin:</p>
                     
-                            <div class="card_lista">
-                                <p class="f_lista"> Nesse mês, temos a seguinte distribuição:</p>
-                                    {% for item in r_distribuicao_mes %}
-                                    {{ item.display }} ja pagou {{item.quantidade}} cafés <br>
-                                    {% endfor %}
-                            </div>      
-                            <div class="card_lista">
-                                <p class="f_lista"> Nesse total, temos a seguinte distribuição:</p>
-                                    {% for item in r_distribuicao_total %}
-                                    {{ item.display }} ja pagou {{item.quantidade}} cafés <br>
-                                    {% endfor %}
-                            </div>                   
-                </section>        
+                    <table class="f_tabela">
+                        {% for item in r_list_user %}
+                        <tr class="f_linha_tabela">
+                            <td> ID: </td>
+                            <td> {{ item.id_usuario }} </td>
+                        </tr>
+                        <tr>
+                            <td> Nome: </td>
+                            <td> {{ item.nome_pagador }}  </td>
+                        </tr>    
+                        <tr>
+                            <td> Email:</td>
+                            <td> {{ item.email_pagador }} </td>
+                        </tr>
+                        <tr>
+                            <td> Apelido: </td>
+                            <td> {{ item.display_pagador }} </td>
+                        </tr>           
+                        <br>
+                        {% endfor %}                    
+                    </table>
+                    
+                    
+                </div>                           
                 
             </main>
 

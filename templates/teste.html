@@ -15,7 +15,6 @@
     <body>
             <header class="topo-pagina">
                 <nav>
-                    <ul>
                         {% if not user %}
                             <li><a href="/">Login</a></li>
                         {% endif %}
@@ -24,34 +23,15 @@
                         {% if user %}
                             <li><a href="/logout">Logout</a></li>
                         {% endif %}
-                    </ul>
                 </nav>
                 
             </header>
 
             <main class="bloco_central">
-                <section class="principal_cafe">
-
-                    <img src="../static/images/logo_cafe.jpg" />
-                    
-                    <form action="/cafe_inserir" method="POST" class="f_form">
-                        <div>
-                            <select class= "f_display" id="v_id" name="v_id">
-                                {% for item in r_lista_usuarios %}
-                                    <option class="f_display" value={{item.id_usuario}}> {{ item.display_pagador }}</option>
-                                {% endfor %}
-                            </select>                                  
-                        </div>
-                        <div>
-                            <input type="number" id="v_quantidade" name="v_quantidade" class="f_quantidade" min="1" max= "10" value="1" />
-                        </div>
-                        <div class="c_butao">
-                            <br>
-                            <button type="submit" class="f_butao"> PAGAR </button>
-                        </div>
-                    </form>  
-
-                </section>                    
+                
+                {% if user %}
+                    <p> Usuario: {{user}} do projeto {{projeto}} </p>
+                {% endif %}
             </main>
 
             
@@ -63,13 +43,3 @@
         
     </body>
 </html>
-
-
-
-
-
-
-
-
-
-
