@@ -15,6 +15,7 @@
     <body>
             <header class="topo-pagina">
                 <nav>
+                    <ul>
                         {% if not user %}
                             <li><a href="/">Login</a></li>
                         {% endif %}
@@ -23,6 +24,7 @@
                         {% if user %}
                             <li><a href="/logout">Logout</a></li>
                         {% endif %}
+                    </ul>
                 </nav>
                 
             </header>
