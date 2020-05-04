@@ -52,7 +52,7 @@ def index():
         v_id_projeto    = request.form['v_id_projeto']
         v_pagador       = request.form['v_pagador']
         v_senha         = request.form['v_senha']        
-        cur  = db.execute('select senha from cafe_pagador where id_projeto = ? and display_pagador = ?', [v_id_projeto, v_pagador])
+        cur  = db.execute('select senha from cafe_pagador where id_projeto = ? and lower(display_pagador) = lower(?)', [v_id_projeto, v_pagador])
         r_senha = cur.fetchone()
         if r_senha and v_senha == r_senha['senha']:
             session['user'] = v_pagador;

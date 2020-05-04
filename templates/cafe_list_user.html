@@ -9,7 +9,7 @@
         <meta name="description" content="Pagina de Aplicativos Fabio Tavares">
         <meta name="keywords" content="html5, tecnologia">
         <meta name="viewport" content="width=device-width">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo_cafe.css') }}">
+        <link rel="stylesheet" href="../static/css/estilo_cafe.css">
     </head>
 
     <body>
@@ -33,30 +33,27 @@
                 
                 <div class="card_lista">
                     <p class="f_lista"> Lista dos Usuários do seu Group Admin:</p>
-                    
-                    <table class="f_tabela">
-                        {% for item in r_list_user %}
-                        <tr class="f_linha_tabela">
-                            <td> ID: </td>
-                            <td> {{ item.id_usuario }} </td>
-                        </tr>
-                        <tr>
-                            <td> Nome: </td>
-                            <td> {{ item.nome_pagador }}  </td>
-                        </tr>    
-                        <tr>
-                            <td> Email:</td>
-                            <td> {{ item.email_pagador }} </td>
-                        </tr>
-                        <tr>
-                            <td> Apelido: </td>
-                            <td> {{ item.display_pagador }} </td>
-                        </tr>           
-                        <br>
-                        {% endfor %}                    
-                    </table>
-                    
-                    
+
+                    {% for item in r_list_user %}
+                        <table class="f_tabela">
+                            <tr class="f_linha_tabela">
+                                <td class="f_col1"> ID: </td>
+                                <td class="f_col2"> {{ item.id_usuario }} </td>
+                            </tr>
+                            <tr>
+                                <td> Nome: </td>
+                                <td> {{ item.nome_pagador }}  </td>
+                            </tr>    
+                            <tr>
+                                <td> Email:</td>
+                                <td> {{ item.email_pagador }} </td>
+                            </tr>
+                            <tr>
+                                <td> Apelido: </td>
+                                <td> {{ item.display_pagador }}</td>
+                            </tr>           
+                        </table>
+                    {% endfor %}                    
                 </div>                           
                 
             </main>

@@ -205,13 +205,22 @@ nav{
     border: 0.5px blue solid;
     border-style: dashed; 
     text-align: left;
-    margin: auto;
+    margin: 10px auto 10px auto;
     padding: 5px; 
+    width: 80%
 }
 
+.f_linha_tabela{
+    margin-bottom: 100px;
+}
 
+.f_col1{
+    background: yellow;
+    width: 20%;
+}
 
-
-
-
+.f_col2{
+    background: red;
+    width: 80%;;
+}
 
