@@ -1,0 +1,14 @@
+{% macro show_menu(user) %}
+    <nav>
+        <ul>
+            {% if not user %}
+                <li><a href="/">Login</a></li>
+            {% endif %}
+            <li><a href="/cafe_inserir">Tomou?</a></li>
+            <li><a href="/cafe_lista">Quem?</a></li>
+            {% if user %}
+                <li><a href="/logout">Logout</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+{% endmacro %}

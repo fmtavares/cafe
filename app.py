@@ -130,7 +130,7 @@ def cafe_add_user():
         if 'user' in session:
             user = session['user']
             projeto = session['projeto']
-            return render_template('cafe_add_user.html', projeto=projeto)
+            return render_template('cafe_add_user.html', user=user, projeto=projeto)
         return '<h1> Nao pode ser  Admin</h1>'
     else:
         v_nome      = request.form['v_nome'] 
@@ -143,7 +143,7 @@ def cafe_add_user():
         db.commit()      
         cur = db.execute('select id_usuario, nome_pagador, email_pagador, display_pagador from cafe_pagador where id_projeto=?', [projeto])
         r_list_user = cur.fetchall()        
-        return render_template('cafe_list_user.html', r_list_user = r_list_user)
+        return render_template('cafe_list_user.html', r_list_user = r_list_user,user=user, projeto = projeto)
 
 
 @app.route('/cafe_list_user', methods=['GET','POST'])
@@ -155,7 +155,7 @@ def cafe_list_user():
             projeto = session['projeto']
             cur = db.execute('select id_usuario, nome_pagador, email_pagador, display_pagador from cafe_pagador where id_projeto=?', [projeto])
             r_list_user = cur.fetchall()
-            return render_template('cafe_list_user.html', r_list_user = r_list_user)    
+            return render_template('cafe_list_user.html', r_list_user = r_list_user, user=user, projeto = projeto)    
     
 @app.route('/logout')
 def logout():

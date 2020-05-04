@@ -1,71 +1,34 @@
-<!doctype html>
-<!-- doctype informa ao agente de usuario a versão do html que deve ser renderizada-->
-<html lang="pt-br">
+{% extends "base.html" %}
+{% from "show_menu.html" import show_menu %}
 
-    <head>
-        <title> One9 Group </title>
-        <meta charset="utf-8">
-        <meta name="author" content="Fabio Tavares">
-        <meta name="description" content="Pagina de Aplicativos Fabio Tavares">
-        <meta name="keywords" content="html5, tecnologia">
-        <meta name="viewport" content="width=device-width">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo_cafe.css') }}">
-    </head>
+{% block show_menu %}
+    {{ show_menu(user) }}
+{% endblock %}
 
-    <body>
-            <header class="topo-pagina">
-                <nav>
-                    <ul>
-                        {% if not user %}
-                            <li><a href="/">Login</a></li>
-                        {% endif %}
-                        <li><a href="/cafe_inserir">Tomou?</a></li>
-                        <li><a href="/cafe_lista">Quem?</a></li>
-                        {% if user %}
-                            <li><a href="/logout">Logout</a></li>
-                        {% endif %}
-                    </ul>
-                </nav>
-                
-            </header>
+{% block principal %}
+    <form action="/cafe_add_user" method="POST">    
+        <div>
+            <label for="v_nome"> Nome: </label>
+            <input type="text" id="v_nome" name="v_nome" class="f_nome" placeholder="digite seu nome" />
+        </div>
 
-            <main class="bloco_central">
-                
-                        <form action="/cafe_add_user" method="POST">    
-                            <div>
-                                <label for="v_nome"> Nome: </label>
-                                <input type="text" id="v_nome" name="v_nome" class="f_nome" placeholder="digite seu nome" />
-                            </div>
+        <div>
+            <label for="v_email"> E-Mail: </label>
+            <input type="email" id="v_email" name="v_email" class="f_email" placeholder="digite seu email"/> 
+        </div>
 
-                            <div>
-                                <label for="v_email"> E-Mail: </label>
-                                <input type="email" id="v_email" name="v_email" class="f_email" placeholder="digite seu email"/> 
-                            </div>
-                            
-                            <div>
-                                <label for="v_apelido"> Apelido: </label>
-                                <input type="text" id="v_apelido" name="v_apelido" class="f_apelido" placeholder="Apelido será o usuário"/> 
-                            </div>
-                            
-                            <div>
-                                <label for="v_senha"> Senha: </label>
-                                <input type="password" id="v_senha" name="v_senha" class="f_senha" placeholder="digite sua senha"/> 
-                            </div>
-                            
-                            <div class="c_butao">
-                                <button type="submit" class="f_butao"> Cadastrar </button>          
-                            </div>
-                        </form>
-                            
-                
-            </main>
+        <div>
+            <label for="v_apelido"> Apelido: </label>
+            <input type="text" id="v_apelido" name="v_apelido" class="f_apelido" placeholder="Apelido será o usuário"/> 
+        </div>
 
-            
-            <footer class="rodape-pagina">
-                <div> 
-                    <p><img src="../static/images/one9.webp" /></p>
-                </div>
-            </footer>
-        
-    </body>
-</html>
+        <div>
+            <label for="v_senha"> Senha: </label>
+            <input type="password" id="v_senha" name="v_senha" class="f_senha" placeholder="digite sua senha"/> 
+        </div>
+
+        <div class="c_butao">
+            <button type="submit" class="f_butao"> Cadastrar </button>          
+        </div>
+    </form>
+{% endblock %}

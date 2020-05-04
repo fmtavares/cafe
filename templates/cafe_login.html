@@ -1,66 +1,30 @@
-<!doctype html>
-<!-- doctype informa ao agente de usuario a versão do html que deve ser renderizada-->
-<html lang="pt-br">
+{% extends "base.html" %}
+{% from "show_menu.html" import show_menu %}
 
-    <head>
-        <title> One9 Group </title>
-        <meta charset="utf-8">
-        <meta name="author" content="Fabio Tavares">
-        <meta name="description" content="Pagina de Aplicativos Fabio Tavares">
-        <meta name="keywords" content="html5, tecnologia">
-        <meta name="viewport" content="width=device-width">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo_cafe.css') }}">
-    </head>
+{% block show_menu %}
+    {{ show_menu(user) }}
+{% endblock %}
 
-    <body>
-            <header class="topo-pagina">
-                <nav>
-                    <ul>
-                        {% if not user %}
-                            <li><a href="/">Login</a></li>
-                        {% endif %}
-                        <li><a href="/cafe_inserir">Tomou?</a></li>
-                        <li><a href="/cafe_lista">Quem?</a></li>
-                        {% if user %}
-                            <li class="f_logout"><a href="/logout">Logout</a></li>
-                        {% endif %}
-                    </ul>
-                </nav>
-                
-            </header>
+{% block principal %}
+    <p> Seja Bem-Vindo Grupo: {{v_nome_apelido}} </p>
+    <section class="principal_cafe">
+    <img src="../static/images/logo_cafe.jpg" />
+    <form action="/cafe" method="POST" class="f_form">
+        <div>
+            <select class= "f_display" id="v_cpf" name="v_cpf">
+                {% for item in r_lista_pagador %}
+                <option class="f_display" value={{item.cpf}}>{{ item.display }}</option>
+                {% endfor %}
+            </select>                                  
+        </div>
+        <div>
+            <input type="number" id="v_quantidade" name="v_quantidade" class="f_quantidade" min="1" max= "10" value="1" />
+        </div>
+        <div class="c_butao">
+            <br>
+            <button type="submit" class="f_butao"> PAGAR </button>
+        </div>
+    </form>  
+    </section>                    
+{% endblock %}
 
-            <main class="bloco_central">
-                
-                <p> Seja Bem-Vindo Grupo: {{v_nome_apelido}} </p>
-                
-                  <section class="principal_cafe">
-                    <img src="../static/images/logo_cafe.jpg" />
-                    <form action="/cafe" method="POST" class="f_form">
-                        <div>
-                            <select class= "f_display" id="v_cpf" name="v_cpf">
-                                {% for item in r_lista_pagador %}
-                                <option class="f_display" value={{item.cpf}}>{{ item.display }}</option>
-                                {% endfor %}
-                            </select>                                  
-                        </div>
-                        <div>
-                            <input type="number" id="v_quantidade" name="v_quantidade" class="f_quantidade" min="1" max= "10" value="1" />
-                        </div>
-                        <div class="c_butao">
-                            <br>
-                            <button type="submit" class="f_butao"> PAGAR </button>
-                        </div>
-                    </form>  
-                </section>                    
-                
-            </main>
-
-            
-            <footer class="rodape-pagina">
-                <div> 
-                    <p><img src="../static/images/one9.webp" /></p>
-                </div>
-            </footer>
-        
-    </body>
-</html>

@@ -200,27 +200,23 @@ nav{
 }
 
 .f_tabela{
-    background: rgba(220, 231, 235, 0.9);
     border-radius: 1em;
     border: 0.5px blue solid;
     border-style: dashed; 
     text-align: left;
-    margin: 10px auto 10px auto;
+    margin-bottom: 10px;
     padding: 5px; 
-    width: 80%
-}
-
-.f_linha_tabela{
-    margin-bottom: 100px;
+    width: 100%;
 }
 
 .f_col1{
     background: yellow;
-    width: 20%;
+    width: 10%;
+    box-sizing: border-box;
 }
 
 .f_col2{
     background: red;
-    width: 80%;;
+    box-sizing: border-box;
 }
 
