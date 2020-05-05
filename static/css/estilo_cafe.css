@@ -203,8 +203,8 @@ nav{
     border-radius: 1em;
     border: 0.5px blue solid;
     border-style: dashed; 
-    text-align: left;
-    margin-bottom: 10px;
+    text-align: center;
+    margin: 10px 0ppx 10px 0px;
     padding: 5px; 
     width: 100%;
     background: rgb(198, 198, 219);
@@ -212,13 +212,11 @@ nav{
 }
 
 .f_col1{
-    background: yellow;
     width: 10%;
     box-sizing: border-box;
 }
 
 .f_col2{
-    background: red;
     box-sizing: border-box;
 }
 
