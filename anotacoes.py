@@ -1,3 +1,33 @@
+##
+
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo_cafe.css') }}">
+
+    
+    
+## Backup do Menu
+##
+
+{% macro show_menu(user) %}
+    <nav>
+        <ul>
+            {% if not user %}
+                <li><a href="/">Login</a></li>
+            {% endif %}
+            <li><a href="/cafe_inserir">Tomou?</a></li>
+            <li><a href="/cafe_lista">Quem?</a></li>
+            {% if user %}
+                <li><a href="/logout">Logout</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+{% endmacro %}
+
+##
+## Script Banco de Dados
+##
+
+
+
 insert into cafe_ordens( id_pagador, id_projeto, quantidade, data )
 values( 100,10,5,'2020-03-10' )
 

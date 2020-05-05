@@ -34,10 +34,11 @@ def admin():
         if 'user' in session:
             user = session['user']
             projeto = session['projeto']
+            admin = session['admin']        
             cur  = db.execute('select admin from cafe_pagador where lower(display_pagador) = lower(?) and id_projeto=?', [user,projeto])
             r_senha = cur.fetchone()    
             if r_senha['admin']=='y':
-                return render_template('cafe_admin.html', user=user, projeto=projeto)
+                return render_template('cafe_admin.html', user=user, projeto=projeto, admin=admin)
             return '<h1> NEM VENHA QUE NAO EH ADMIN </h1>'
         return '<h1> PRECISA LOGAR </h1>'
     
@@ -52,16 +53,19 @@ def index():
         v_id_projeto    = request.form['v_id_projeto']
         v_pagador       = request.form['v_pagador']
         v_senha         = request.form['v_senha']        
-        cur  = db.execute('select senha from cafe_pagador where id_projeto = ? and lower(display_pagador) = lower(?)', [v_id_projeto, v_pagador])
+        cur  = db.execute('select admin, senha from cafe_pagador where id_projeto = ? and lower(display_pagador) = lower(?)', [v_id_projeto, v_pagador])
         r_senha = cur.fetchone()
+        
         if r_senha and v_senha == r_senha['senha']:
             session['user'] = v_pagador;
             session['projeto'] = v_id_projeto;
+            session['admin'] = r_senha['admin']
             user = session['user']
-            projeto = session['projeto'] 
+            projeto = session['projeto']
+            admin = session['admin']        
             cur  = db.execute('select id_usuario, display_pagador from cafe_pagador where id_projeto = ?', [v_id_projeto])
             r_lista_usuarios = cur.fetchall()
-            return render_template('cafe_inserir.html', r_lista_usuarios=r_lista_usuarios,user=user, projeto=projeto)
+            return render_template('cafe_inserir.html', r_lista_usuarios=r_lista_usuarios,user=user, projeto=projeto, admin=admin)
         return render_template('cafe_erro_autenticacao.html')
 
 @app.route('/cafe_inserir', methods=['GET','POST'])
@@ -73,14 +77,16 @@ def cafe_inserir():
         if 'user' in session:
             user = session['user']
             projeto = session['projeto'] 
+            admin = session['admin']        
             cur  = db.execute('select id_usuario, display_pagador from cafe_pagador where id_projeto = ?', [projeto])
             r_lista_usuarios = cur.fetchall()
-            return render_template('cafe_inserir.html',r_lista_usuarios=r_lista_usuarios,user=user)
+            return render_template('cafe_inserir.html',r_lista_usuarios=r_lista_usuarios,user=user, admin=admin)
         else: 
             return render_template('cafe_nao.html')
     else:
         user = session['user']
         projeto = session['projeto'] 
+        admin = session['admin']        
         v_id = request.form['v_id']
         v_quantidade = request.form['v_quantidade'] 
         db.execute('insert into cafe_ordens (id_pagador, id_projeto, quantidade) values (?,?,?)',[v_id, projeto, v_quantidade])
@@ -98,7 +104,7 @@ def cafe_inserir():
         cur = db.execute('select b.nome_pagador display, sum(a.quantidade) quantidade from cafe_ordens a, cafe_pagador b where a.id_projeto = ? and a.id_pagador = b.id_usuario group by a.id_pagador order by 2 desc', [projeto])
         r_distribuicao_total = cur.fetchall()
         
-        return render_template('cafe_lista.html', r_soma_total=r_soma_total, r_soma_periodo=r_soma_periodo, r_distribuicao_mes=r_distribuicao_mes, r_distribuicao_total=r_distribuicao_total,user=user)
+        return render_template('cafe_lista.html', r_soma_total=r_soma_total, r_soma_periodo=r_soma_periodo, r_distribuicao_mes=r_distribuicao_mes, r_distribuicao_total=r_distribuicao_total,user=user, admin=admin)
         
 @app.route('/cafe_lista', methods=['GET'])
 def lista():
@@ -106,6 +112,7 @@ def lista():
     if 'user' in session:
         user = session['user']
         projeto = session['projeto'] 
+        admin = session['admin']        
     
         cur = db.execute('select sum(quantidade) soma from cafe_ordens where id_projeto=?', [projeto])
         r_soma_total = cur.fetchone()   
@@ -119,7 +126,7 @@ def lista():
         cur = db.execute('select b.nome_pagador display, sum(a.quantidade) quantidade from cafe_ordens a, cafe_pagador b where a.id_projeto = ? and a.id_pagador = b.id_usuario group by a.id_pagador order by 2 desc', [projeto])
         r_distribuicao_total = cur.fetchall()
         
-        return render_template('cafe_lista.html', r_soma_total=r_soma_total, r_soma_periodo=r_soma_periodo, r_distribuicao_mes=r_distribuicao_mes, r_distribuicao_total=r_distribuicao_total,user=user)
+        return render_template('cafe_lista.html', r_soma_total=r_soma_total, r_soma_periodo=r_soma_periodo, r_distribuicao_mes=r_distribuicao_mes, r_distribuicao_total=r_distribuicao_total,user=user, admin=admin)
     
     return render_template('cafe_nao.html')
   
@@ -130,7 +137,8 @@ def cafe_add_user():
         if 'user' in session:
             user = session['user']
             projeto = session['projeto']
-            return render_template('cafe_add_user.html', user=user, projeto=projeto)
+            admin = session['admin']        
+            return render_template('cafe_add_user.html', user=user, projeto=projeto, admin=admin)
         return '<h1> Nao pode ser  Admin</h1>'
     else:
         v_nome      = request.form['v_nome'] 
@@ -139,11 +147,12 @@ def cafe_add_user():
         v_senha     = request.form['v_senha'] 
         user = session['user']
         projeto = session['projeto']
+        admin = session['admin']        
         db.execute('insert into cafe_pagador (nome_pagador, display_pagador, id_projeto, senha) values (?,?,?,?)',[v_nome, v_apelido, projeto, v_senha])
         db.commit()      
         cur = db.execute('select id_usuario, nome_pagador, email_pagador, display_pagador from cafe_pagador where id_projeto=?', [projeto])
         r_list_user = cur.fetchall()        
-        return render_template('cafe_list_user.html', r_list_user = r_list_user,user=user, projeto = projeto)
+        return render_template('cafe_list_user.html', r_list_user = r_list_user,user=user, projeto = projeto, admin=admin)
 
 
 @app.route('/cafe_list_user', methods=['GET','POST'])
@@ -153,9 +162,10 @@ def cafe_list_user():
         if 'user' in session:
             user = session['user']
             projeto = session['projeto']
+            admin = session['admin']        
             cur = db.execute('select id_usuario, nome_pagador, email_pagador, display_pagador from cafe_pagador where id_projeto=?', [projeto])
             r_list_user = cur.fetchall()
-            return render_template('cafe_list_user.html', r_list_user = r_list_user, user=user, projeto = projeto)    
+            return render_template('cafe_list_user.html', r_list_user = r_list_user, user=user, projeto = projeto, admin=admin)    
     
 @app.route('/logout')
 def logout():

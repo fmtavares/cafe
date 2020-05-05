@@ -5,6 +5,54 @@ body{
     padding: 0px;
 }
 
+.tabela-menu{
+    background: rgb(203, 203, 209);
+    margin: auto;
+    width: 100%;
+    font-family: sans-serif;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.menu-left{
+    width: 20%;
+    text-align: left;
+    padding-left: 5%;
+    color: white;
+    text-decoration: none;
+}
+
+.menu-central{
+    width: 55%;
+    text-align: center;
+    text-decoration: none;
+}
+
+.menu-central a{
+    padding-right: 5%;
+    letter-spacing: 1px;
+    display: inline;
+    text-decoration: none;
+    color: rgb(93, 91, 91);
+}
+
+.menu-right{
+    width: 20%;
+    text-align: right;
+    padding-right: 5%;
+    text-decoration: none;
+}
+
+.menu-login{
+    color: rgb(29, 119, 29);
+    text-decoration: none;
+}
+
+.menu-logout{
+    color: rgb(204, 93, 93);
+    text-decoration: none;
+}
+
 .topo-pagina{
     margin: 0px;
     height: auto;
@@ -12,36 +60,6 @@ body{
     background: rgba(181, 179, 179, 0.9);
     display: block;
     box-sizing: border-box;
-    text-align: center;
-}
-
-nav{
-    margin: auto;
-    width: auto;
-    height: auto;
-    box-sizing: border-box;
-    text-align: center;
-    overflow: auto;
-    padding-bottom: 10px;
-}
-
-.topo-pagina nav li{
-    float: left;
-    margin: 0;
-    text-align: center;
-    list-style: none;
-    padding-right: 0;
-    display: inline-block;
-    width: 30%;
-}
-
-.topo-pagina nav a{
-    color: #3c3c3c;
-    text-decoration: none;
-    text-transform: capitalize;
-    font-size: 15px;
-    letter-spacing: 3px;
-    transition: color 0.2s linear;
     text-align: center;
 }
 

@@ -1,14 +1,26 @@
-{% macro show_menu(user) %}
-    <nav>
-        <ul>
-            {% if not user %}
-                <li><a href="/">Login</a></li>
-            {% endif %}
-            <li><a href="/cafe_inserir">Tomou?</a></li>
-            <li><a href="/cafe_lista">Quem?</a></li>
-            {% if user %}
-                <li><a href="/logout">Logout</a></li>
-            {% endif %}
-        </ul>
-    </nav>
+{% macro show_menu(user,admin) %}
+        <table class="tabela-menu">
+            <tr>
+                
+                <td  class="menu-left">
+                    {% if admin == 'y' %}
+                        <a href="/admin"> Admin </a>
+                    {% endif %}
+                </td>
+                
+                <td  class="menu-central">
+                    <p> <a href="/cafe_inserir"> Tomou? </a> </p> 
+                    <p> <a href="/cafe_lista"> Quem? </a> </p>
+                </td>
+                
+                <td class="menu-right">
+                    {% if not user %}
+                        <a href="/"> Login </a>
+                    {% endif %}
+                    {% if user %}                    
+                        <a href="/logout"> Logout</a>
+                    {% endif %}                
+                </td>
+            </tr>
+        </table>
 {% endmacro %}
