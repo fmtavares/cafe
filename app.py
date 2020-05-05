@@ -33,8 +33,8 @@ def admin():
     if request.method == 'GET':
         if 'user' in session:
             user = session['user']
-            projeto = session['projeto'] 
-            cur  = db.execute('select admin from cafe_pagador where display_pagador = ?', [user])
+            projeto = session['projeto']
+            cur  = db.execute('select admin from cafe_pagador where lower(display_pagador) = lower(?) and id_projeto=?', [user,projeto])
             r_senha = cur.fetchone()    
             if r_senha['admin']=='y':
                 return render_template('cafe_admin.html', user=user, projeto=projeto)

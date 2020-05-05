@@ -1,34 +1,56 @@
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo_cafe.css') }}">
+insert into cafe_ordens( id_pagador, id_projeto, quantidade, data )
+values( 100,10,5,'2020-03-10' )
+
+insert into cafe_ordens( id_pagador, id_projeto, quantidade, data )
+values( 200,10,4,'2020-03-10' );
+
+insert into cafe_ordens( id_pagador, id_projeto, quantidade, data )
+values( 300,10,6,'2020-03-10' );
+
+insert into cafe_ordens( id_pagador, id_projeto, quantidade, data )
+values( 400,10,3,'2020-03-10' );
+
+insert into cafe_ordens( id_pagador, id_projeto, quantidade, data )
+values( 100,10,4,'2020-04-10' );
+
+insert into cafe_ordens( id_pagador, id_projeto, quantidade, data )
+values( 200,10,6,'2020-04-10' );
+
+insert into cafe_ordens( id_pagador, id_projeto, quantidade, data )
+values( 300,10,3,'2020-04-10' );
+
+insert into cafe_ordens( id_pagador, id_projeto, quantidade, data )
+values( 400,10,5,'2020-04-10' );
 
 
 
-    
-    
-    
-                session['user'] = v_pagador;
-            session['projeto'] = v_id_projeto;
-            user = session['user']
-            cur  = db.execute('select  id_usuario, nome_pagador, email_pagador, cpf, display_pagador from cafe_pagador where id_projeto = ?', [v_id_projeto])
-            r_lista_usuarios = cur.fetchall()
-            return render_template('cafe_list_user.html', r_lista_usuarios=r_lista_usuarios,user=user)
-        
-        
-        
-        
+insert into cafe_ordens( id_pagador, id_projeto, quantidade, data )
+values( 500,20,4,'2020-03-10' );
 
-    
-    @app.route('/cafe_add_user', methods=['GET','POST'])
-def cafe_add_user():
-    db = get_db()
-    if request.method == 'GET':    
-        if 'user' in session:
-            user = session['user']
-            projeto = session['projeto']
-            return render_template('cafe_add_user.html', projeto)
-        return '<h1> Nao pode ser  Admin</h1>'
-    else:
-        v_nome = request.form['v_nome'] 
-        v_display = request.form['v_display'] 
-        v_email = request.form['v_email'] 
-        v_senha = request.form['v_senha'] 
-        return '<h1> Usuario: {}, Apelido: {} e Senha: {} </h1>'.format(v_nome, v_display, v_senha)
+insert into cafe_ordens( id_pagador, id_projeto, quantidade, data )
+values( 500,20,6,'2020-03-10' );
+
+insert into cafe_ordens( id_pagador, id_projeto, quantidade, data )
+values( 600,20,3,'2020-04-10' );
+
+insert into cafe_ordens( id_pagador, id_projeto, quantidade, data )
+values( 600,20,5,'2020-04-10' );
+
+
+insert into cafe_ordens( id_pagador, id_projeto, quantidade, data )
+values( 504,30,7,'2020-03-10' );
+
+insert into cafe_ordens( id_pagador, id_projeto, quantidade, data )
+values( 505,30,8,'2020-03-10' );
+
+insert into cafe_ordens( id_pagador, id_projeto, quantidade, data )
+values( 506,30,6,'2020-03-10' );
+
+insert into cafe_ordens( id_pagador, id_projeto, quantidade, data )
+values( 504,30,5,'2020-04-10' );
+
+insert into cafe_ordens( id_pagador, id_projeto, quantidade, data )
+values( 505,30,4,'2020-04-10' );
+
+insert into cafe_ordens( id_pagador, id_projeto, quantidade, data )
+values( 506,30,5,'2020-04-10' );

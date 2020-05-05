@@ -203,7 +203,7 @@ nav{
     border-radius: 1em;
     border: 0.5px blue solid;
     border-style: dashed; 
-    text-align: center;
+    text-align: left;
     margin: 10px 0px 10px 0px;
     padding: 5px; 
     width: 100%;
@@ -212,11 +212,13 @@ nav{
 }
 
 .f_col1{
+    text-align: left;
     width: 10%;
     box-sizing: border-box;
 }
 
 .f_col2{
     box-sizing: border-box;
+    text-align: left;
 }
 
