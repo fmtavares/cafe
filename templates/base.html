@@ -6,15 +6,35 @@
         <title> One9 Group </title>
         <meta charset="utf-8">
         <meta name="author" content="Fabio Tavares">
-        <meta name="description" content="Pagina de Aplicativos Fabio Tavares">
+        <meta name="description" content="Pagina de Aplicativos: Fabio Tavares">
         <meta name="keywords" content="html5, tecnologia">
-        <meta name="viewport" content="width=device-width">
-        <link rel="stylesheet" href="../static/css/estilo_cafe.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../static/css/new_estilo_cafe.css">
+
     </head>
 
     <body>
             <header class="topo-pagina">
-                {% block show_menu %} {% endblock %}
+                <div class="menu">
+                <ul class="menu-list">
+                  {% if admin == 'y' %}
+                      <li> <a href="/admin"> Admin </a>
+                          <ul class="sub-menu">
+                            <li><a href="#">List User</a></li>
+                            <li><a href="#">Add User</a></li>
+                          </ul>
+                      </li>
+                  {% endif %}
+                      <li><a href="/cafe_inserir">Pagar</a></li>
+                      <li><a href="/cafe_lista">Quem Paga?</a></li>
+                  {% if not user %}
+                      <li><a href="/"> Login </a></li>
+                  {% endif %}
+                  {% if user %}
+                      <li><a href="/"> Logout </a></li>
+                  {% endif %}      
+                </ul>
+                </div>         
             </header>
 
             <main class="bloco_central">

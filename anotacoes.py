@@ -3,7 +3,26 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo_cafe.css') }}">
 
     
-    
+                <div class="menu">
+                <ul class="menu-list">
+                  {% if admin == 'y' %}
+                      <li> <a href="/admin"> Admin </a>
+                          <ul class="sub-menu">
+                            <li><a href="#">List User</a></li>
+                            <li><a href="#">Add User</a></li>
+                          </ul>
+                      </li>
+                  {% endif %}
+                      <li><a href="/cafe_inserir">Pagar</a></li>
+                      <li><a href="/cafe_lista">Quem Paga?</a></li>
+                  {% if not user %}
+                      <li><a href="/"> Login </a></li>
+                  {% endif %}
+                  {% if user %}
+                      <li><a href="/"> Logout </a></li>
+                  {% endif %}      
+                </ul>
+                </div>     
 ## Backup do Menu
 ##
 
