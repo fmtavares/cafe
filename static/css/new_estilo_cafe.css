@@ -35,7 +35,7 @@
 /* Configura os links do menu principal */
 .menu > .menu-list > li > a {
   padding: 5px;
-  margin: 15px 5px 10px 20px;
+  margin: 10px 5px 10px 10px;
   background: background: rgb(134, 134, 134);
 }
 /* Configura o fundo do menu principal quando com mouse hover */
@@ -75,54 +75,6 @@ body{
     background: white;
     margin: 0;
     padding: 0px;
-}
-
-.tabela-menu{
-    background: rgb(203, 203, 209);
-    margin: auto;
-    width: 100%;
-    font-family: sans-serif;
-    font-size: 14px;
-    text-decoration: none;
-}
-
-.menu-left{
-    width: 20%;
-    text-align: left;
-    padding-left: 5%;
-    color: white;
-    text-decoration: none;
-}
-
-.menu-central{
-    width: 55%;
-    text-align: center;
-    text-decoration: none;
-}
-
-.menu-central a{
-    padding-right: 5%;
-    letter-spacing: 1px;
-    display: inline;
-    text-decoration: none;
-    color: rgb(93, 91, 91);
-}
-
-.menu-right{
-    width: 20%;
-    text-align: right;
-    padding-right: 5%;
-    text-decoration: none;
-}
-
-.menu-login{
-    color: rgb(29, 119, 29);
-    text-decoration: none;
-}
-
-.menu-logout{
-    color: rgb(204, 93, 93);
-    text-decoration: none;
 }
 
 .topo-pagina{
@@ -274,15 +226,20 @@ body{
 }
 
 .f_butao{
-    background: #5a5a52;
+    background: #717169;
     color: white;
     height: 30px;
     text-align: center;
+    border-radius: 1em;
+    border: 4px #6d6d6f solid;
+    border-style: double; 
 }
 
 .f_butao:hover{
     background: #9a9a6b;
 }
+
+/* Configuração da listagem de usuarios do Admin */
 
 .f_lista{
     font-weight: 600;

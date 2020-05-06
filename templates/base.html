@@ -18,10 +18,10 @@
                 <div class="menu">
                 <ul class="menu-list">
                   {% if admin == 'y' %}
-                      <li> <a href="/admin"> Admin </a>
+                      <li> <a href="#"> Admin </a>
                           <ul class="sub-menu">
-                            <li><a href="#">List User</a></li>
-                            <li><a href="#">Add User</a></li>
+                            <li><a href="/cafe_list_user">List User</a></li>
+                            <li><a href="/cafe_add_user">Add User</a></li>
                           </ul>
                       </li>
                   {% endif %}
@@ -34,14 +34,14 @@
                       <li><a href="/"> Logout </a></li>
                   {% endif %}      
                 </ul>
-                </div>         
+                </div>    
             </header>
 
             <main class="bloco_central">
                 {% block principal %} {% endblock %}  
             </main>
-            
-            <footer class="rodape-pagina">
+
+        <footer class="rodape-pagina">
                 <div> 
                     <p><img src="../static/images/one9.webp" /></p>
                 </div>

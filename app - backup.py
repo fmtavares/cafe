@@ -56,13 +56,15 @@ def index():
         return render_template('cafe_inicio.html',r_lista_projetos=r_lista_projetos, r_lista_usuarios = r_lista_usuarios)
     
     else:
+
         v_id_projeto    = request.form['v_id_projeto']
-        v_id_usuario    = request.form['v_id_usuario']
+        v_pagador       = request.form['v_pagador']
         v_senha         = request.form['v_senha']        
-        cur  = db.execute('select display_pagador, admin, senha from cafe_pagador where id_usuario = ?', [v_id_usuario])
+        cur  = db.execute('select admin, senha from cafe_pagador where id_projeto = ? and lower(display_pagador) = lower(?)', [v_id_projeto, v_pagador])
         r_senha = cur.fetchone()
+        
         if r_senha and v_senha == r_senha['senha']:
-            session['user'] = r_senha['display_pagador'];
+            session['user'] = v_pagador;
             session['projeto'] = v_id_projeto;
             session['admin'] = r_senha['admin']
             user = session['user']

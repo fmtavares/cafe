@@ -1,8 +1,10 @@
 ##
 
         <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo_cafe.css') }}">
+   
+## Backup do Menu
+##
 
-    
                 <div class="menu">
                 <ul class="menu-list">
                   {% if admin == 'y' %}
@@ -22,25 +24,8 @@
                       <li><a href="/"> Logout </a></li>
                   {% endif %}      
                 </ul>
-                </div>     
-## Backup do Menu
-##
-
-{% macro show_menu(user) %}
-    <nav>
-        <ul>
-            {% if not user %}
-                <li><a href="/">Login</a></li>
-            {% endif %}
-            <li><a href="/cafe_inserir">Tomou?</a></li>
-            <li><a href="/cafe_lista">Quem?</a></li>
-            {% if user %}
-                <li><a href="/logout">Logout</a></li>
-            {% endif %}
-        </ul>
-    </nav>
-{% endmacro %}
-
+                </div>       
+                
 ##
 ## Script Banco de Dados
 ##

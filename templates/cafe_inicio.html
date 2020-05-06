@@ -6,17 +6,26 @@
 {% endblock %}
 
 {% block principal %}
-    <form action="/" method="POST" class="f_form">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<form action="/" method="POST" class="f_form">
     <div>
-        <select class= "f_display_projeto" id="v_id_projeto" name="v_id_projeto">
+        <select class= "f_display_projeto" id="p-shift" name="v_id_projeto">
             {% for item in r_lista_projetos %}
+            <option selected disabled> </option>
             <option class="f_display" value={{item.id_projeto}}> {{ item.display_projeto }} </option>             
             {% endfor %}
         </select>                                  
     </div>
+
     <div>
-        <input type="text" id="v_pagador" name="v_pagador" placeholder="digite usuário" class="f_display_usuario" />
-    </div>
+        <select class= "f_display_projeto" id="t-shift" name="v_id_usuario">
+            {% for aux_user in r_lista_usuarios %}
+            <option selected disabled> </option>
+            <option data-course="{{ aux_user.id_projeto }}" class="f_display" value={{aux_user.id_usuario}}> {{ aux_user.display_pagador }} </option>             
+            {% endfor %}
+        </select>                                  
+    </div>    
 
     <div>
         <input type="text" id="v_senha" name="v_senha" placeholder="digite a senha" class="f_display_senha" />
@@ -26,5 +35,29 @@
         <br>
         <button type="submit" class="f_butao"> OK </button>
     </div>
-    </form>  
+</form>  
+
+            <script>
+                $(function () {
+
+                  // Oculta as opções do segundo select:
+                  $("#t-shift option").hide();
+
+                  // Observa o evento change do primeiro select:
+                  $("#p-shift").on("change", function () {
+
+                    // Recupera o valor selecionado:
+                    let course = $("#p-shift").val();
+
+                    // Oculta as opções atuais:
+                    $("#t-shift option").hide();
+
+                    // Exibe as opções conforme a seleção:
+                    $("#t-shift option[data-course="+ course +"]").show();
+
+                  });
+
+                });     
+            </script>            
+
 {% endblock %}
