@@ -1,0 +1,281 @@
+
+/* ********************************************** */
+/* Pagina Principal                               */
+/* ********************************************** */
+
+.topo-pagina{
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: orange;
+    margin: 0;
+    height: 100%;
+    width: 10%;
+    box-sizing: border-box;
+    padding-top: 3%;
+    font-size: 20px;
+}
+
+.menu-principal {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    color: white;
+    text-decoration: none;
+}
+
+.menu-principal a{
+    text-decoration: none;
+    color: white;
+}
+
+.menu-principal li{
+    padding-bottom: 35%;
+    text-align: center;
+}
+
+.logo img{
+    position: fixed;
+    right: 1%;
+    top: 2%;
+    width: 5%;
+}
+
+.bloco-principal{
+    width: 90%;
+    margin: 5% 5% 5% 10%;
+    text-align: center;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 12px;
+}
+
+
+/* ********************************************** */
+/* Menu com opção dinamica                        */
+/* ********************************************** */
+
+/* Fundo do menu */
+.menu{
+  background: rgb(134, 134, 134);
+}
+
+/* Remove as bolinhas do lado das listas */
+.menu .menu-list, .menu .sub-menu{
+  list-style: none;
+}
+/* Configura todos os links do nosso menu */
+.menu a{
+  color: #fff;
+  text-decoration: none;
+  display: block;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing:0.2em;
+}
+/* Faz os <li>s ficarem na horizontal */
+.menu > .menu-list > li{
+  float: left;
+  position: relative;
+}
+/* Configura os links do menu principal */
+.menu > .menu-list > li > a {
+  padding: 5px;
+  margin: 10px 5px 10px 10px;
+  background: background: rgb(134, 134, 134);
+}
+/* Configura o fundo do menu principal quando com mouse hover */
+.menu > .menu-list > li:hover a {
+  background: rgb(128, 119, 119);
+}
+/* Mostra o submenu no evento de mouse hover */
+.menu > .menu-list > li:hover > .sub-menu {
+  display: block;
+}
+/* Configura o estilo do submenu */
+.menu > .menu-list > li > .sub-menu {
+  position: absolute;
+  top: 40px;
+  left: 20px;
+  background: blue;
+  min-width: 130px;
+  z-index: 1000;
+  display: none;
+}
+/* Configura os links do submenu */
+.menu > .menu-list > li > .sub-menu > li > a {
+	padding: 5px 10px;
+}
+/* Clearfix para o menu */
+.menu:after {
+  content: '.';
+  display: block;
+  clear: both;
+  visibility: hidden;
+  line-height: 0;
+  height: 0;
+}
+
+/* ********************************************** */
+/* Botoes e Formulários                           */
+/* ********************************************** */
+
+.f_quantidade{
+    width: 20%;
+    height: 25px;
+    border: 1px solid blue;
+    border-radius: 1em;
+    font-size: 14px;
+    text-align: center;
+}
+
+
+.f_senha{
+    width: 20%;
+    height: 35px;
+    border: 1px solid blue;
+    border-radius: 1em;
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.f_nome_chave{
+    width: 30%;
+    height: 35px;
+    border: 1px solid blue;
+    border-radius: 1em;
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.f_nome{
+    width: 40%;
+    height: 35px;
+    border: 1px solid blue;
+    border-radius: 1em;
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.f_apelido{
+    width: 20%;
+    height: 35px;
+    border: 1px solid blue;
+    border-radius: 1em;
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.f_email{
+    width: 40%;
+    height: 35px;
+    border: 1px solid blue;
+    border-radius: 1em;
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.f_titulo_soma{
+    color: rgba(185, 10, 10, 0.9);
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.f_display_projeto{
+    width: 70%;
+    height: 35px;
+    border: 1px solid blue;
+    border-radius: 1em;
+    font-size: 14px;
+    text-align: right;
+    margin-bottom: 20px;
+}
+
+.f_display_usuario{
+    width: 40%;
+    height: 35px;
+    border: 1px solid blue;
+    border-radius: 1em;
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.f_display_senha{
+    width: 40%;
+    height: 35px;
+    border: 1px solid blue;
+    border-radius: 1em;
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.f_display{
+    width: 70%;
+    height: 35px;
+    border: 1px solid blue;
+    border-radius: 1em;
+    font-size: 14px;
+    text-align: right;
+    margin-bottom: 20px;
+}
+
+.c_butao{
+    width: 150px;
+    margin: 0px auto 0px;
+    text-align: center;
+}
+
+.f_butao{
+    background: #717169;
+    color: white;
+    height: 30px;
+    text-align: center;
+    border-radius: 1em;
+    border: 4px #6d6d6f solid;
+    border-style: double; 
+}
+
+.f_butao:hover{
+    background: #9a9a6b;
+}
+
+/* Configuração da listagem de usuarios do Admin */
+
+.f_lista{
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.f_tabela{
+    border-radius: 1em;
+    border: 0.5px blue solid;
+    border-style: dashed; 
+    text-align: center;
+    margin: auto;
+    padding: 5px; 
+    width: 70%;
+    background: rgb(198, 198, 219);
+
+}
+
+.f_col1{
+    text-align: left;
+    width: 10%;
+    box-sizing: border-box;
+}
+
+.f_col2{
+    box-sizing: border-box;
+    text-align: left;
+}
+
+
+

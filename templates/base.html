@@ -2,50 +2,41 @@
 <!-- doctype informa ao agente de usuario a versão do html que deve ser renderizada-->
 <html lang="pt-br">
 
-    <head>
-        <title> One9 Group </title>
-        <meta charset="utf-8">
-        <meta name="author" content="Fabio Tavares">
-        <meta name="description" content="Pagina de Aplicativos: Fabio Tavares">
-        <meta name="keywords" content="html5, tecnologia">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="../static/css/new_estilo_cafe.css">
+<head>
+    <title> One9 Group </title>
+    <meta charset="utf-8">
+    <meta name="author" content="Fabio Tavares">
+    <meta name="description" content="Pagina de Aplicativos: Fabio Tavares">
+    <meta name="keywords" content="html5, tecnologia">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/normalize.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/top_estilo_cafe.css">
+</head>
+    
+<body>
+    <header class="topo-pagina">
+        <ul class="menu-principal">
+            {% if admin == 'y' %}
+                <li> <a href="/admin"> <i class="fas fa-users-cog"></i> </a></li>
+            {% endif %}
+            {% if not user %}
+                <li> <a href="/"><i class="fas fa-sign-in-alt" style="color:green"></i> </a></li>
+            {% endif %}
+                <li> <a href="/cafe_inserir"><i class="fas fa-coffee"></i> </a></li>
+                <li> <a href="/cafe_lista"><i class="fas fa-list-ul"></i> </a></li>
+            {% if user %}
+                <li> <a href="/logout"><i class="fas fa-sign-out-alt" style="color:darkred"></i> </a></li>
+            {% endif %}            
+        </ul>
+        <p class="logo"><img src="../static/images/one9.webp" /></p>
+    </header>    
+    
+    <main class="bloco-principal">
+        {% block principal %} {% endblock %}  
+    </main>
 
-    </head>
+</body>
 
-    <body>
-            <header class="topo-pagina">
-                <div class="menu">
-                <ul class="menu-list">
-                  {% if admin == 'y' %}
-                      <li> <a href="#"> Admin </a>
-                          <ul class="sub-menu">
-                            <li><a href="/cafe_list_user">List User</a></li>
-                            <li><a href="/cafe_add_user">Add User</a></li>
-                          </ul>
-                      </li>
-                  {% endif %}
-                      <li><a href="/cafe_inserir">Pagar</a></li>
-                      <li><a href="/cafe_lista">Quem Paga?</a></li>
-                  {% if not user %}
-                      <li><a href="/"> Login </a></li>
-                  {% endif %}
-                  {% if user %}
-                      <li><a href="/"> Logout </a></li>
-                  {% endif %}      
-                </ul>
-                </div>    
-            </header>
-
-            <main class="bloco_central">
-                {% block principal %} {% endblock %}  
-            </main>
-
-        <footer class="rodape-pagina">
-                <div> 
-                    <p><img src="../static/images/one9.webp" /></p>
-                </div>
-            </footer>
-        
-    </body>
 </html>

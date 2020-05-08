@@ -19,10 +19,10 @@
     </div>
 
     <div>
-        <select class= "f_display_projeto" id="t-shift" name="v_id_usuario">
+        <select class= "f_display_projeto" id="t-shift" name="v_id_usuario">    
             {% for aux_user in r_lista_usuarios %}
-            <option selected disabled> </option>
-            <option data-course="{{ aux_user.id_projeto }}" class="f_display" value={{aux_user.id_usuario}}> {{ aux_user.display_pagador }} </option>             
+                <option selected disabled> </option>
+                <option data-course="{{ aux_user.id_projeto }}" class="f_display" value={{aux_user.id_usuario}}> {{ aux_user.display_pagador }} </option>             
             {% endfor %}
         </select>                                  
     </div>    
