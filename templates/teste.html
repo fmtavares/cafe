@@ -9,21 +9,33 @@
         <meta name="description" content="Pagina de Aplicativos Fabio Tavares">
         <meta name="keywords" content="html5, tecnologia">
         <meta name="viewport" content="width=device-width">
-        <link rel="stylesheet" href="../static/css/estilo_cafe.css">
+        <link rel="stylesheet" href="../static/css/top_estilo_cafe.css">
     </head>
 
     <body>
 
-<main class="bloco_central">      
+<main class="bloco-principal">      
 
+    <img src="../static/images/logo_cafe.jpg" />
+    
+    <form action="/cafe_inserir" method="POST" class="f_form">
+        <div>
+            <select class= "f_display" id="v_id" name="v_id">
+                {% for item in r_lista_usuarios %}
+                    <option class="f_display" value={{item.id_usuario}}> {{ item.display_pagador }}</option>
+                {% endfor %}
+            </select>                                  
+        </div>
+        <div>
+            <input type="number" id="v_quantidade" name="v_quantidade" class="f_quantidade" min="1" max= "10" value="1" />
+        </div>
+        <div class="c_butao">
+            <br>
+            <button type="submit" class="f_butao"> PAGAR </button>
+        </div>
+    </form>  
     
 </main>
-            
-            <footer class="rodape-pagina">
-                <div> 
-                    <p><img src="../static/images/one9.webp" /></p>
-                </div>
-            </footer>
         
     </body>
 </html>

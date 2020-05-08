@@ -49,6 +49,9 @@
     font-size: 12px;
 }
 
+.bloco-principal img{
+    width: 50%
+}
 
 /* ********************************************** */
 /* Menu com opção dinamica                        */
