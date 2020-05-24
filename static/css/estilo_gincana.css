@@ -475,18 +475,29 @@
 }
 
 .bloco-enquete-a{
-    width: 50%;
+    width: 85%;
     text-align: left;
+}
+
+.bloco-enquete-b a{
+    text-decoration: none;
+    color: inherit;
 }
 
 .bloco-enquete-b{
     width: 5%;
-    color: darkgreen;
+    text-decoration: none;
+    color: darkolivegreen;
+}
+
+.bloco-enquete-c a{
+    text-decoration: none;
+    color: inherit;
 }
 
 .bloco-enquete-c{
     width: 5%;
-    color: cadetblue;
+    color: dodgerblue;
 }
 
 .bloco-resultado{
@@ -516,18 +527,25 @@
     border: 1px solid grey;
     border-radius: 10px;
     background: rgba(229, 228, 228, 0.3);
-    margin: 15px auto;
-    width: 80%;
-    height: 100px;
+    margin: 10px auto;
+    width: 90%;
+    height: auto;
+    padding-bottom: 20px;
 }    
+
+.bloco-p1 a{
+    text-decoration: none;
+    color: inherit;    
+}
     
 .bloco-p2{
     border: 1px solid grey;
     border-radius: 10px;
     background: rgba(229, 228, 228, 0.3);
-    margin: 15px auto;
-    width: 80%;
-    height: 100px;
+    margin: auto;
+    width: 90%;
+    height: auto;
+    padding-bottom: 20px;
 }    
 
 .bt-enquete{
@@ -542,5 +560,33 @@
     border-style: double;     
 }
 
+.bloco-mural-a{
+    width: 90%;
+    height: auto;
+    display: block;
+    margin: auto;
+    text-align: left;
+    color: black;
+}
 
+.bloco-mural-b{
+    width: 50%;
+    height: auto;
+    display: inline-block;
+    text-align: left;
+    float: left;
+    margin-left: 5%;
+    font-size: 11px;
+    color: darkcyan;
+}
+
+.bloco-mural-c{
+    width: 30%;
+    height: auto;
+    display: inline-block;
+    margin-bottom: 10px;
+    text-align: right;
+    font-size: 11px;
+    color: darkcyan;
+}
 
