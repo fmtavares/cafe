@@ -1,0 +1,46 @@
+<!doctype html>
+<!-- doctype informa ao agente de usuario a versão do html que deve ser renderizada-->
+{% from "condominio_menu.html" import condominio_menu %}
+
+<html lang="pt-br">
+
+<head>
+    <title> One9 Group </title>
+    <meta charset="utf-8">
+    <meta name="author" content="Fabio Tavares">
+    <meta name="description" content="Pagina de Aplicativos: Fabio Tavares">
+    <meta name="keywords" content="html5, tecnologia">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/normalize.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/estilo_gincana.css">
+</head>
+    
+<body>
+    <header class="topo-pagina">
+        {% block condominio_menu %}
+            {{ condominio_menu(user,admin) }}
+        {% endblock %}
+        <p class="logo"><img src="../static/images/one9.webp" /></p>
+    </header>    
+    
+    <main class="bloco-principal">
+        
+        <h1>Resultado da Enquete</h1>
+        <div class="bloco-resultado">
+        {% for enquete in r_enquete_placar %}
+            <div class="bloco-resultado-a">
+                <span> {{ enquete['opcao'] }} </span>
+            </div>
+            <div class="bloco-resultado-b">        
+                <span> {{  enquete['votos'] }} </span>
+            </div>
+        {% endfor %}
+        </div>
+                
+    </main>
+
+</body>
+
+</html>

@@ -1,15 +1,18 @@
 from flask import Flask, request, url_for, redirect, render_template, g, session
+from werkzeug.utils import secure_filename
 import sqlite3
 import os
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(24)
+app.config["IMAGE_UPLOADS"] = "/Users/fabio/flask/static/imagens"
+app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["JPEG", "JPG", "PNG", "GIF"]
 #
 # conexao com o banco
 # configuracao correta 
 
 def connect_db():
-    sql = sqlite3.connect('/Users/fabio/flask/teste.db')
+    sql = sqlite3.connect('/Users/fabio/flask/condominio.db')
     sql.row_factory = sqlite3.Row
     return sql
 
@@ -23,196 +26,293 @@ def close_db(error):
     if hasattr(g, 'sqlite_db'):
         g.sqlite_db.close()
 
+def allowed_image(filename):
+    if not "." in filename:
+        return False
+    ext = filename.rsplit(".", 1)[1]
+    if ext.upper() in app.config["ALLOWED_IMAGE_EXTENSIONS"]:
+        return True
+    else:
+        return False
+    
 #
 # termino da configuracao de conexao do bloco_faleconosco
 #
 
-@app.route('/admin', methods=['GET', 'POST'])
-def admin():
-    db = get_db()
-    if request.method == 'GET':
-        if 'user' in session:
-            user = session['user']
-            projeto = session['projeto']
-            admin = session['admin']        
-            cur  = db.execute('select admin from cafe_pagador where lower(display_pagador) = lower(?) and id_projeto=?', [user,projeto])
-            r_senha = cur.fetchone()    
-            if r_senha['admin']=='y':
-                return render_template('cafe_admin.html', user=user, projeto=projeto, admin=admin)
-            return '<h1> NEM VENHA QUE NAO EH ADMIN </h1>'
-        return '<h1> PRECISA LOGAR </h1>'
-    
-@app.route('/', methods=['GET', 'POST'])
+
+@app.route('/', methods=['GET','POST'])
 def index():
-    db = get_db()
-    if request.method == 'GET':
-
-        cur  = db.execute('select id_projeto, display_projeto from cafe_projetos')
-        r_lista_projetos = cur.fetchall()
-
-        cur  = db.execute('select id_projeto, id_usuario, display_pagador from cafe_pagador')
-        r_lista_usuarios = cur.fetchall()        
-        
-        return render_template('cafe_inicio.html',r_lista_projetos=r_lista_projetos, r_lista_usuarios = r_lista_usuarios)
-    
-    else:
-        v_id_projeto    = request.form['v_id_projeto']
-        v_id_usuario    = request.form['v_id_usuario']
-        v_senha         = request.form['v_senha']        
-        cur  = db.execute('select display_pagador, admin, senha from cafe_pagador where id_usuario = ?', [v_id_usuario])
-        r_senha = cur.fetchone()
-        if r_senha and v_senha == r_senha['senha']:
-            session['user'] = r_senha['display_pagador'];
-            session['projeto'] = v_id_projeto;
-            session['admin'] = r_senha['admin']
-            user = session['user']
-            projeto = session['projeto']
-            admin = session['admin']        
-            cur  = db.execute('select id_usuario, display_pagador from cafe_pagador where id_projeto = ?', [v_id_projeto])
-            r_lista_usuarios = cur.fetchall()
-            return render_template('cafe_inserir.html', r_lista_usuarios=r_lista_usuarios,user=user, projeto=projeto, admin=admin)
-
-        return render_template('cafe_erro_autenticacao.html')
-
-@app.route('/cafe_inserir', methods=['GET','POST'])
-def cafe_inserir():
-    db = get_db()
-    projeto = None
-    user = None
     if request.method == 'GET':
         if 'user' in session:
+            db = get_db()
             user = session['user']
-            projeto = session['projeto'] 
-            admin = session['admin']        
-            cur  = db.execute('select id_usuario, display_pagador from cafe_pagador where id_projeto = ?', [projeto])
-            r_lista_usuarios = cur.fetchall()
-            return render_template('cafe_inserir.html',r_lista_usuarios=r_lista_usuarios,user=user, admin=admin)
-        else: 
-            return render_template('cafe_nao.html')
+            admin = session['admin']
+            v_visible = 'y'
+            cur = db.execute('select id_pergunta, pergunta from cond_pergunta where visivel = ?', [v_visible])
+            r_perguntas = cur.fetchall()                
+            return render_template('condominio_inicio.html', r_perguntas=r_perguntas, user=user, admin=admin)                    
+        else:
+            return render_template('condominio_base.html')
+
+@app.route('/login', methods=['GET','POST'])
+def login():
+    db = get_db()
+    if request.method == 'GET':
+        return render_template('condominio_login.html')
     else:
+        v_andar     = request.form['form-cadastro-andar']
+        v_apto      = request.form['form-cadastro-apto']
+        v_senha     = request.form['form-cadastro-senha'] 
+        v_tipo      = 'owner'
+        cur = db.execute('select id, nome, senha, tipo, admin from condominio_moradores where tipo = ? and andar = ? and apto = ?',[v_tipo, v_andar, v_apto])
+        r_morador = cur.fetchone()        
+        
+        if not r_morador:
+            return 'nao cadastrado ainda'
+        
+        if r_morador['senha'] == v_senha:
+            session['user'] = r_morador['id']
+            session['admin'] = r_morador['admin']
+            user = session['user']
+            admin = session['admin']
+            v_visible = 'y'
+            cur = db.execute('select id_pergunta, pergunta from cond_pergunta where visivel = ?', [v_visible])
+            r_perguntas = cur.fetchall()                
+            return render_template('condominio_inicio.html', r_perguntas=r_perguntas, user=user, admin=admin)        
+        else:   
+            return 'senha invalida'
+    
+    
+@app.route('/cadastro', methods=['POST', 'GET'])
+def cadastro():
+    db = get_db()
+    if request.method == 'GET':
+        return render_template('condominio_user_01_inicial.html')        
+    else:
+        v_andar     = request.form['form-cadastro-andar']
+        v_apto      = request.form['form-cadastro-apto']
+        v_nome      = request.form['form-cadastro-nome']
+        v_email     = request.form['form-cadastro-email']       
+        v_apelido   = request.form['form-cadastro-apelido']
+        v_foto      = request.files['form-cadastro-foto']
+        v_telefone  = request.form['form-cadastro-telefone']
+        v_senha     = request.form['form-cadastro-senha']
+        v_tipo      = 'owner'
+
+        if v_foto.filename == "":
+            return 'precisa enviar um arquivo com nome'
+
+        if not allowed_image(v_foto.filename):
+            return 'precisa enviar outro formato'
+        
+        cur = db.execute('select id from condominio_moradores where tipo = ? and andar = ? and apto = ?',[v_tipo, v_andar, v_apto])
+        r_morador = cur.fetchone()
+        if r_morador:
+            return 'morador ja exite'
+
+        v_arquivo = str(v_andar)+str(v_apto)+'.jpg'
+    
+        v_foto.filename = v_arquivo
+        v_foto.save(os.path.join(app.config["IMAGE_UPLOADS"], v_foto.filename))            
+              
+        cur = db.execute('INSERT INTO condominio_moradores (andar, apto, nome, apelido, email, telefone, senha, tipo, foto) VALUES (?,?,?,?,?,?,?,?,?)',[v_andar,v_apto,v_nome,v_apelido,v_email,v_telefone,v_senha,v_tipo,v_arquivo])
+
+        cur  = db.execute('select id,admin from condominio_moradores where tipo = ? and andar = ? and apto = ?',[v_tipo, v_andar, v_apto])
+        r_morador = cur.fetchone()        
+        
+        session['user']  = r_morador['id']
+        session['admin'] = r_morador['admin']
         user = session['user']
-        projeto = session['projeto'] 
-        admin = session['admin']        
-        v_id = request.form['v_id']
-        v_quantidade = request.form['v_quantidade'] 
-        db.execute('insert into cafe_ordens (id_pagador, id_projeto, quantidade) values (?,?,?)',[v_id, projeto, v_quantidade])
+        admin = session['admin']
         db.commit()
         
-        cur = db.execute('select sum(quantidade) soma from cafe_ordens where id_projeto=?', [projeto])
-        r_soma_total = cur.fetchone()   
-        
-        cur = db.execute('select sum(quantidade) soma from cafe_ordens where id_projeto = ? and strftime(\'%m\', data) = strftime(\'%m\', \'now\')', [projeto])
-        r_soma_periodo = cur.fetchone()   
-        
-        cur = db.execute('select b.nome_pagador display, sum(a.quantidade) quantidade from cafe_ordens a, cafe_pagador b where a.id_projeto = ? and a.id_pagador = b.id_usuario and strftime(\'%m\', a.data) = strftime(\'%m\', \'now\') group by a.id_pagador order by 2 desc', [projeto])
-        r_distribuicao_mes = cur.fetchall()
-        
-        cur = db.execute('select b.nome_pagador display, sum(a.quantidade) quantidade from cafe_ordens a, cafe_pagador b where a.id_projeto = ? and a.id_pagador = b.id_usuario group by a.id_pagador order by 2 desc', [projeto])
-        r_distribuicao_total = cur.fetchall()
-        
-        return render_template('cafe_lista.html', r_soma_total=r_soma_total, r_soma_periodo=r_soma_periodo, r_distribuicao_mes=r_distribuicao_mes, r_distribuicao_total=r_distribuicao_total,user=user, admin=admin)
-        
-@app.route('/cafe_lista', methods=['GET'])
-def lista():
+        cur  = db.execute('select id, andar, apto, nome, apelido, email, telefone, nascimento, sobre_voce, sobre_familia, tipo, status, foto, admin from condominio_moradores where tipo = ? and andar = ? and apto = ?',[v_tipo, v_andar, v_apto])
+        r_morador = cur.fetchone()                
+            
+        return render_template('condominio_user_02_modificar.html', r_morador=r_morador, user=user,  admin=admin)
+
+
+@app.route('/atualiza_morador', methods=['POST', 'GET'])
+def add_morador():
     db = get_db()
+    if request.method == 'GET':
+        if 'user' in session:
+            user = session['user']
+            admin = session['admin']
+
+            cur  = db.execute('select andar, apto, nome, apelido, email, telefone, nascimento, sobre_voce, sobre_familia, tipo, status, foto from condominio_moradores where id=?',[user])
+            r_morador = cur.fetchone()                
+            
+            v_andar = r_morador['andar'] 
+            v_apto  = r_morador['apto'] 
+            v_tipo  = 'owner'
+            
+            cur  = db.execute('select id, nome, apelido, tipo from condominio_moradores where andar=? and apto=? and tipo<>? ',[v_andar, v_apto, v_tipo])
+            r_todos = cur.fetchall()                
+        
+            return render_template('condominio_user_02_modificar.html', r_morador=r_morador, user=user,  admin=admin, r_todos = r_todos)     
+        
+        else:
+            return 'Precisa estar logado'
+            
+    else:
+        if 'user' in session:
+            user = session['user']
+            admin = session['admin']
+            v_nome          = request.form['form-cadastro-nome']
+            v_email         = request.form['form-cadastro-email']       
+            v_apelido       = request.form['form-cadastro-apelido']
+            v_telefone      = request.form['form-cadastro-telefone']
+            v_nascimento    = request.form['form-cadastro-nascimento']
+            v_filhos        = request.form['form-cadastro-filhos']
+            v_sobre_voce    = request.form['form-cadastro-sobre_voce']
+            v_sobre_familia = request.form['form-cadastro-sobre_familia']
+            
+            db.execute('update condominio_moradores set nome=?, apelido=?, email=?, telefone=?, nascimento=?, sobre_voce=?, sobre_familia=?, filhos=? where id = ?', [v_nome,v_apelido, v_email, v_telefone, v_nascimento, v_sobre_voce, v_sobre_familia, v_filhos, user])
+            
+            db.commit()    
+            return 'Atualizado com sucesso'
+        
+        else:
+            return 'Precisa estar logado'
+        
+
+@app.route('/add_integrante', methods=['POST', 'GET'])
+def add_integrante():
+    db = get_db()
+    if request.method == 'GET':
+        if 'user' in session:
+            user = session['user']
+            admin = session['admin']
+
+            cur  = db.execute('select andar, apto from condominio_moradores where id=?',[user])
+            r_morador = cur.fetchone() 
+
+            return render_template('condominio_user_03_addmorador.html', r_morador  = r_morador , user=user, admin=admin)
+        else:
+            return 'Precisa estar logado'        
+    else:
+            v_tipo          = request.form['form-cadastro-tipo']
+            v_nome          = request.form['form-cadastro-nome']
+            v_email         = request.form['form-cadastro-email']       
+            v_telefone      = request.form['form-cadastro-telefone']
+            v_apelido       = request.form['form-cadastro-apelido']
+            v_nascimento    = request.form['form-cadastro-nascimento']
+            v_sobre_voce    = request.form['form-cadastro-voce']
+
+            user = session['user']
+            admin = session['admin']
+
+            cur  = db.execute('select andar, apto from condominio_moradores where id=?',[user])
+            r_morador = cur.fetchone() 
+            v_andar = r_morador['andar']
+            v_apto  = r_morador['apto']
+            v_senha = '1133557799'
+  
+            cur = db.execute('INSERT INTO condominio_moradores (andar, apto, nome, apelido, email, telefone, senha, tipo, nascimento, sobre_voce) VALUES (?,?,?,?,?,?,?,?,?,?)',[v_andar, v_apto, v_nome, v_apelido, v_email, v_telefone, v_senha, v_tipo, v_nascimento, v_sobre_voce])
+            
+            db.commit()
+            
+            return 'Inserido com sucesso'
+        
+        
+@app.route('/lista_predio', methods=['POST', 'GET'])
+def listar_predio():
+    db = get_db()
+
     if 'user' in session:
         user = session['user']
-        projeto = session['projeto'] 
-        admin = session['admin']        
-    
-        cur = db.execute('select sum(quantidade) soma from cafe_ordens where id_projeto=?', [projeto])
-        r_soma_total = cur.fetchone()   
-        
-        cur = db.execute('select sum(quantidade) soma from cafe_ordens where id_projeto = ? and strftime(\'%m\', data) = strftime(\'%m\', \'now\')', [projeto])
-        r_soma_periodo = cur.fetchone()   
-        
-        cur = db.execute('select b.nome_pagador display, sum(a.quantidade) quantidade from cafe_ordens a, cafe_pagador b where a.id_projeto = ? and a.id_pagador = b.id_usuario and strftime(\'%m\', a.data) = strftime(\'%m\', \'now\') group by a.id_pagador order by 2 desc', [projeto])
-        r_distribuicao_mes = cur.fetchall()
-        
-        cur = db.execute('select b.nome_pagador display, sum(a.quantidade) quantidade from cafe_ordens a, cafe_pagador b where a.id_projeto = ? and a.id_pagador = b.id_usuario group by a.id_pagador order by 2 desc', [projeto])
-        r_distribuicao_total = cur.fetchall()
-        
-        return render_template('cafe_lista.html', r_soma_total=r_soma_total, r_soma_periodo=r_soma_periodo, r_distribuicao_mes=r_distribuicao_mes, r_distribuicao_total=r_distribuicao_total,user=user, admin=admin)
-    
-    return render_template('cafe_nao.html')
-  
-@app.route('/cafe_add_user', methods=['GET','POST'])
-def cafe_add_user():
-    db = get_db()
-    if request.method == 'GET':    
-        if 'user' in session:
-            user = session['user']
-            projeto = session['projeto']
-            admin = session['admin']        
-            return render_template('cafe_add_user.html', user=user, projeto=projeto, admin=admin)
-        return '<h1> Nao pode ser  Admin</h1>'
+        admin = session['admin']
+
+        cur = db.execute('select id, nome, apelido, andar, apto from condominio_moradores order by andar, apto')
+        r_lista_predio = cur.fetchall()
+
+        return render_template('condominio_user_05_listar.html', r_lista_predio = r_lista_predio, user=user, admin=admin)
     else:
-        v_nome      = request.form['v_nome'] 
-        v_apelido  = request.form['v_apelido'] 
-        v_email     = request.form['v_email'] 
-        v_senha     = request.form['v_senha'] 
-        user = session['user']
-        projeto = session['projeto']
-        admin = session['admin']        
-        db.execute('insert into cafe_pagador (nome_pagador, display_pagador, id_projeto, senha) values (?,?,?,?)',[v_nome, v_apelido, projeto, v_senha])
-        db.commit()      
-        cur = db.execute('select id_usuario, nome_pagador, email_pagador, display_pagador from cafe_pagador where id_projeto=?', [projeto])
-        r_list_user = cur.fetchall()        
-        return render_template('cafe_list_user.html', r_list_user = r_list_user,user=user, projeto = projeto, admin=admin)
-
-
-@app.route('/cafe_list_user', methods=['GET','POST'])
-def cafe_list_user():
-    db = get_db()
-    if request.method == 'GET':    
-        if 'user' in session:
-            user = session['user']
-            projeto = session['projeto']
-            admin = session['admin']        
-            cur = db.execute('select id_usuario, nome_pagador, email_pagador, display_pagador from cafe_pagador where id_projeto=?', [projeto])
-            r_list_user = cur.fetchall()
-            return render_template('cafe_list_user.html', r_list_user = r_list_user, user=user, projeto = projeto, admin=admin)    
+        return 'Precisa estar logado'
     
 @app.route('/logout')
 def logout():
     session.pop('user', None)
-    return redirect(url_for('index')) 
+    return redirect(url_for('index'))     
+    
 
-@app.route('/teste', methods=['GET','POST'])
+@app.route('/test', methods=['POST', 'GET'])  
+def test():
+    return render_template('teste.html')
+        
+@app.route('/detalha_morador', methods=['POST', 'GET'])  
 def teste():
     db = get_db()
     if request.method == 'GET':    
-        cur  = db.execute('select id_projeto, display_projeto from cafe_projetos')
-        r_lista_projetos = cur.fetchall()
-
-        cur  = db.execute('select id_projeto, display_projeto from cafe_projetos')
-        r_lista_projetos = cur.fetchall()
-
-        cur  = db.execute('select id_projeto, id_usuario, display_pagador from cafe_pagador')
-        r_lista_usuarios = cur.fetchall()
-
-        return render_template('teste.html',r_lista_projetos=r_lista_projetos, r_lista_usuarios=r_lista_usuarios)
+        v_id = request.args.get('id')
+        cur = db.execute('select id, apto, andar, tipo, nome, apelido, email, telefone, nascimento, sobre_voce from condominio_moradores where id =?', [v_id])
+        r_morador = cur.fetchone()
+        return render_template('condominio_user_04_modifymorador.html', r_morador=r_morador)
     else:
-        v_id_projeto    = request.form['v_id_projeto']
-        v_pagador       = request.form['v_id_usuario']
-        v_senha         = request.form['v_senha']        
-        return 'Projeto {} Usuario {} e Senha {}'.format(v_id_projeto, v_pagador, v_senha)
+            v_id            = request.form['form-cadastro-id']
+            v_tipo          = request.form['form-cadastro-tipo']
+            v_nome          = request.form['form-cadastro-nome']
+            v_email         = request.form['form-cadastro-email']       
+            v_apelido       = request.form['form-cadastro-apelido']
+            v_telefone      = request.form['form-cadastro-telefone']
+            v_nascimento    = request.form['form-cadastro-nascimento']
+            v_voce          = request.form['form-cadastro-voce']
+            db.execute('update condominio_moradores set tipo=?, nome=?, email=?, apelido=?, telefone=?, nascimento=?, sobre_voce=? where id=?', [v_tipo, v_nome, v_email, v_apelido, v_telefone, v_nascimento, v_voce, v_id])
+            
+            db.commit()    
+            return 'Atualizado com sucesso'
         
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        
+@app.route('/cond_enquete', methods=['POST', 'GET'])  
+def cond_enquete():
+    db = get_db()
+    if request.method == 'GET':    
+        if 'user' in session:
+            user = session['user']
+            admin = session['admin']
+            v_visible = 'y'
+            cur = db.execute('select id_pergunta, pergunta from cond_pergunta where visivel = ?', [v_visible])
+            r_perguntas = cur.fetchall()    
+            return render_template('cond_lista_enquete.html', r_perguntas=r_perguntas, user=user, admin=admin)
+    
+@app.route('/cond_opcoes', methods=['POST', 'GET'])  
+def cond_opcoes(): 
+    db = get_db()
+    if request.method == 'GET':    
+        if 'user' in session:
+            user = session['user']
+            admin = session['admin']
+            v_id = request.args.get('id')
+            cur = db.execute('select id_pergunta, id_opcao, opcao from cond_opcoes where id_pergunta = ?', [v_id])
+            r_opcoes = cur.fetchall()    
+            return render_template('cond_lista_opcoes.html', r_opcoes=r_opcoes,user=user, admin=admin)
+    else:
+        if 'user' in session:
+            user = session['user']
+            admin = session['admin']
+            v_opcao    = request.form['form-enquete_opcao']
+            v_pergunta = request.form['form-enquete_pergunta']
+            
+            cur = db.execute('INSERT INTO cond_respostas (id_pergunta,id_morador,id_opcao) VALUES (?,?,?)',[v_pergunta,user,v_opcao])
+            
+            db.commit()
+            
+            cur = db.execute('select b.opcao opcao, count(a.id_opcao) votos from cond_respostas a, cond_opcoes b where a.id_pergunta = ? and a.id_opcao = b.id_opcao group by a.id_opcao', [v_pergunta])
+            r_enquete_placar = cur.fetchall()                
+            
+            return render_template('cond_enquete_placar.html', r_enquete_placar=r_enquete_placar,user=user, admin=admin)
+        
+        
+@app.route('/cond_enquete_placar', methods=['POST', 'GET'])  
+def cond_enquete_placar(): 
+    db = get_db()
+    if 'user' in session:
+        user = session['user']
+        admin = session['admin']        
+        v_pergunta = request.args.get('id')
+        cur = db.execute('select b.opcao opcao, count(a.id_opcao) votos from cond_respostas a, cond_opcoes b where a.id_pergunta = ? and a.id_opcao = b.id_opcao group by a.id_opcao', v_pergunta)
+        r_enquete_placar = cur.fetchall()    
+        return render_template('cond_enquete_placar.html', r_enquete_placar=r_enquete_placar,user=user, admin=admin)    
+    
+    

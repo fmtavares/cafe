@@ -14,26 +14,14 @@
 
     <body>
 
-<main class="bloco-principal">      
-
-    <img src="../static/images/logo_cafe.jpg" />
+<main>      
+    {%  set v_id7 = 6 %}
+    {%  set v_id8 = 6 %}
+    <h1> Teste de Parametro </h1>
+    <p> <a href="/teste?id={{ v_id7 }}"> teste passando parametro 7 </a> </p>
+    <p> <a href="/teste?id={{ v_id8 }}"> teste passando parametro 8 </a> </p>
     
-    <form action="/cafe_inserir" method="POST" class="f_form">
-        <div>
-            <select class= "f_display" id="v_id" name="v_id">
-                {% for item in r_lista_usuarios %}
-                    <option class="f_display" value={{item.id_usuario}}> {{ item.display_pagador }}</option>
-                {% endfor %}
-            </select>                                  
-        </div>
-        <div>
-            <input type="number" id="v_quantidade" name="v_quantidade" class="f_quantidade" min="1" max= "10" value="1" />
-        </div>
-        <div class="c_butao">
-            <br>
-            <button type="submit" class="f_butao"> PAGAR </button>
-        </div>
-    </form>  
+    <p> <a href="/"> teste passando parametro 0 </a> </p>
     
 </main>
         
