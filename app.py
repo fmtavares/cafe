@@ -140,14 +140,14 @@ def add_morador():
             user = session['user']
             admin = session['admin']
 
-            cur  = db.execute('select andar, apto, nome, apelido, email, telefone, nascimento, sobre_voce, sobre_familia, tipo, status, foto from condominio_moradores where id=?',[user])
+            cur  = db.execute('select andar, apto, nome, apelido, email, telefone, nascimento, sobre_voce, sobre_familia, tipo, status, foto,filhos from condominio_moradores where id=?',[user])
             r_morador = cur.fetchone()                
             
             v_andar = r_morador['andar'] 
             v_apto  = r_morador['apto'] 
             v_tipo  = 'owner'
             
-            cur  = db.execute('select id, nome, apelido, tipo from condominio_moradores where andar=? and apto=? and tipo<>? ',[v_andar, v_apto, v_tipo])
+            cur  = db.execute('select id, nome, apelido, tipo,nascimento,sobre_voce,sobre_familia, foto, filhos from condominio_moradores where andar=? and apto=? and tipo<>? ',[v_andar, v_apto, v_tipo])
             r_todos = cur.fetchall()                
         
             return render_template('condominio_user_02_modificar.html', r_morador=r_morador, user=user,  admin=admin, r_todos = r_todos)     
@@ -167,11 +167,11 @@ def add_morador():
             v_filhos        = request.form['form-cadastro-filhos']
             v_sobre_voce    = request.form['form-cadastro-sobre_voce']
             v_sobre_familia = request.form['form-cadastro-sobre_familia']
-            
             db.execute('update condominio_moradores set nome=?, apelido=?, email=?, telefone=?, nascimento=?, sobre_voce=?, sobre_familia=?, filhos=? where id = ?', [v_nome,v_apelido, v_email, v_telefone, v_nascimento, v_sobre_voce, v_sobre_familia, v_filhos, user])
             
             db.commit()    
-            return 'Atualizado com sucesso'
+            
+            return redirect(url_for('index'))
         
         else:
             return 'Precisa estar logado'
@@ -284,9 +284,15 @@ def cond_opcoes():
             user = session['user']
             admin = session['admin']
             v_id = request.args.get('id')
-            cur = db.execute('select id_pergunta, id_opcao, opcao from cond_opcoes where id_pergunta = ?', [v_id])
-            r_opcoes = cur.fetchall()    
-            return render_template('cond_lista_opcoes.html', r_opcoes=r_opcoes,user=user, admin=admin)
+            
+            cur = db.execute('select b.opcao opcao from cond_respostas a, cond_opcoes b where a.id_opcao = b.id_opcao and a.id_morador = ? and a.id_pergunta = ?', [user, v_id])
+            r_morador = cur.fetchone()
+            if r_morador:
+                return render_template('condominio_votacao_erro.html', r_morador=r_morador,user=user, admin=admin)
+            else:
+                cur = db.execute('select id_pergunta, id_opcao, opcao from cond_opcoes where id_pergunta = ?', [v_id])
+                r_opcoes = cur.fetchall()    
+                return render_template('cond_lista_opcoes.html', r_opcoes=r_opcoes,user=user, admin=admin)
     else:
         if 'user' in session:
             user = session['user']

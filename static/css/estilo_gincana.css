@@ -530,10 +530,10 @@
     border: 1px solid grey;
     border-radius: 10px;
     background: rgba(229, 228, 228, 0.3);
-    margin: 10px auto;
+    margin: 30px auto;
     width: 90%;
     height: auto;
-    padding-bottom: 20px;
+    padding: 10px;
 }    
 
 .bloco-p1 a{
@@ -545,10 +545,10 @@
     border: 1px solid grey;
     border-radius: 10px;
     background: rgba(229, 228, 228, 0.3);
-    margin: auto;
+    margin: 20px auto;
     width: 90%;
     height: auto;
-    padding-bottom: 20px;
+    padding: 10px;
 }    
 
 .bt-enquete{
@@ -564,7 +564,7 @@
 }
 
 .bloco-mural-a{
-    width: 90%;
+    width: 100%;
     height: auto;
     display: block;
     margin: auto;
@@ -573,18 +573,17 @@
 }
 
 .bloco-mural-b{
-    width: 50%;
+    width: 60%;
     height: auto;
     display: inline-block;
     text-align: left;
     float: left;
-    margin-left: 5%;
     font-size: 11px;
     color: darkcyan;
 }
 
 .bloco-mural-c{
-    width: 30%;
+    width: 40%;
     height: auto;
     display: inline-block;
     margin-bottom: 10px;

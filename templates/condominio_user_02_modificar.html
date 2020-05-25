@@ -46,16 +46,16 @@
                     <input type="text" id="form-cadastro-telefone" name="form-cadastro-telefone" class="form-cadastro-telefone" value = "{{ r_morador['telefone'] }}"/> <br>                
                 
                     <label> Nascimento: </label>
-                    <input type="date" id="form-cadastro-nascimento" name="form-cadastro-nascimento" class="form-cadastro-nascimento" /> <br>                   
+                    <input type="date" id="form-cadastro-nascimento" name="form-cadastro-nascimento" class="form-cadastro-nascimento" value = "{{ r_morador['nascimento'] }}"/> <br>                   
                 
                     <label> Qtde Filhos: </label>
-                    <input type="number" id="form-cadastro-filhos" name="form-cadastro-filhos" class="form-cadastro-filhos" /> <br>                                
+                    <input type="number" id="form-cadastro-filhos" name="form-cadastro-filhos" class="form-cadastro-filhos" value = "{{ r_morador['filhos'] }}"/> <br>                                
                 
                     <label> Sobre Você: </label>
-                    <textarea id="form-cadastro-sobre_voce" name="form-cadastro-sobre_voce" class="form-cadastro-voce" placeholder="Fale um pouco mais sobre você ..."> </textarea><br>
+                    <input type="text" id="form-cadastro-sobre_voce" name="form-cadastro-sobre_voce" class="form-cadastro-voce" value = "{{ r_morador['sobre_voce'] }}" /><br>
                 
                     <label> Sua Família: </label>
-                    <textarea id="form-cadastro-sobre_familia" name="form-cadastro-sobre_familia" class="form-cadastro-familia" placeholder="Fale um pouco mais sobre sua familia ..."> </textarea><br>
+                    <input type="text" id="form-cadastro-sobre_familia" name="form-cadastro-sobre_familia" class="form-cadastro-familia" value = "{{ r_morador['sobre_familia'] }}" /><br>
                 
                     <button type="submit" class="form-cadastro-butao"> Modificar </button>          
             </form>            
