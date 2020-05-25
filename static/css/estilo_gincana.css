@@ -508,12 +508,14 @@
     width: 80%;
     height: auto;
     padding: 10px 10px;
+    display: block;
 }    
 
 .bloco-resultado-a{
     font-weight: bolder;
     width: 40%;
     text-align: left;
+    display: inline-block;
 }
 
 
@@ -521,6 +523,7 @@
     font-weight: bold;
     width: 5%;
     text-align: left;
+    display: inline-block;
 }
 
 .bloco-p1{
