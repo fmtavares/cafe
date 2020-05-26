@@ -599,3 +599,32 @@
 .bloco-r-visita-b{
     width: 30%;
 }
+
+.agenda-admin-linha-a{
+    background: #12125c;
+    width: 100%;
+    box-sizing: border-box;
+    display: block;
+    text-align: left;
+    padding: 5px 5px 5px 10px;
+    color: aliceblue;
+    border-radius: 5px;
+    margin: 0px;
+}
+
+.agenda-admin-linha-b{
+    text-align: left;
+    width: 55%;
+    display: inline-block;
+    margin: auto;
+    float: left;
+    padding: 5px 0px 10px 10px;
+}
+
+.agenda-admin-linha-c{
+    display: inline-block;
+    width: 40%;
+    padding: 5px 0px 10px 0px;
+    text-align: left;
+}
+

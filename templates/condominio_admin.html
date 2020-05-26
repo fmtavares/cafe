@@ -1,0 +1,61 @@
+<!doctype html>
+<!-- doctype informa ao agente de usuario a versão do html que deve ser renderizada-->
+{% from "condominio_menu.html" import condominio_menu %}
+<html lang="pt-br">
+
+<head>
+    <title> One9 Group </title>
+    <meta charset="utf-8">
+    <meta name="author" content="Fabio Tavares">
+    <meta name="description" content="Pagina de Aplicativos: Fabio Tavares">
+    <meta name="keywords" content="html5, tecnologia">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="../static/css/normalize.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/estilo_gincana.css">
+</head>
+    
+<body>
+    <header class="topo-pagina">
+        
+        {% block condominio_menu %}
+            {{ condominio_menu(user,admin) }}
+        {% endblock %}
+        
+        <p class="logo"><img src="../static/images/one9.webp" /></p>
+    </header>    
+    
+    <main class="bloco-principal">
+        
+        <h1>Jardim das Perdizes</h1>
+        
+        <p> Painel Administração</p>
+        
+        <div class="principal-inicial">
+            <div class="bloco-p1">
+                <p> <strong>Agenda de Visitas para hoje: </strong></p>
+                
+                {% for agenda in r_agenda_dia %}
+                <p class="agenda-admin-linha-a"> Apto {{ agenda['andar'] }} {{ agenda['apto'] }} </p>
+                <span class="agenda-admin-linha-b"> Visitante: {{ agenda['visitante'] }} </span>
+                <span class="agenda-admin-linha-c"> Doc: {{ agenda['doc'] }} </span>
+                <br>
+                {% endfor %}
+            </div>
+            
+            <div class="bloco-p1">
+                <p> Agenda de Recados:</p>
+            </div>
+            
+            <div class="bloco-p1">
+                <p> Agenda do Salão de Festas da Semana:</p>
+            </div>            
+
+        </div>
+        
+    </main>
+
+</body>
+
+</html>

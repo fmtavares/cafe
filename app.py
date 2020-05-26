@@ -347,4 +347,16 @@ def cond_agendar_visita():
         return render_template('condominio_agendar_vista.html',user=user, admin=admin, r_morador=r_morador, r_visitas=r_visitas)
     else:
         return 'precisa logar'
-        
+
+@app.route('/admin', methods=['GET','POST'])
+def admin():
+    if request.method == 'GET':
+        if 'user' in session:
+            db = get_db()
+            user = session['user']
+            admin = session['admin']
+            cur = db.execute('select b.apelido morador, b.andar andar, b.apto apto, a.nome visitante, a.doc doc, a.data_visita data_visita, a.turno turno, strftime(\'%d\',a.data_visita) dia_visita, strftime(\'%m\',\'now\') mes_visita from cond_agenda_visitas a, condominio_moradores b where a.id_usuario = b.id and strftime(\'%d\',a.data_visita) = strftime(\'%d\',\'now\') order by a.data_visita')
+            r_agenda_dia = cur.fetchall()    
+
+            return render_template('condominio_admin.html', r_agenda_dia = r_agenda_dia, user=user, admin=admin)     
+    
