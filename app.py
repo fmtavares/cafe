@@ -321,4 +321,30 @@ def cond_enquete_placar():
         r_enquete_placar = cur.fetchall()    
         return render_template('cond_enquete_placar.html', r_enquete_placar=r_enquete_placar,user=user, admin=admin)    
     
-    
+@app.route('/cond_agendar_visita', methods=['POST', 'GET'])  
+def cond_agendar_visita(): 
+    db = get_db()
+    if 'user' in session:
+        user = session['user']
+        admin = session['admin']        
+        if request.method == 'POST':    
+            v_nome      = request.form['form-agenda-nome']
+            v_doc       = request.form['form-agenda-doc']
+            v_detalhe   = request.form['form-agenda-detalhe']
+            v_data      = request.form['form-agenda-data']
+            v_turno     = request.form['form-agenda-turno']
+            
+            cur = db.execute('insert into cond_agenda_visitas (nome,doc,detalhe,id_usuario,data_visita, turno) values (?,?,?,?,?,?)',[v_nome,v_doc,v_detalhe,user,v_data,v_turno])
+            
+            db.commit()
+        
+        cur  = db.execute('select andar, apto from condominio_moradores where id=?',[user])
+        r_morador = cur.fetchone()         
+        
+        cur_visitas  = db.execute('select nome, doc, data_visita, turno from cond_agenda_visitas where id_usuario = ? order by data_visita',[user])
+        r_visitas = cur_visitas.fetchall()         
+        
+        return render_template('condominio_agendar_vista.html',user=user, admin=admin, r_morador=r_morador, r_visitas=r_visitas)
+    else:
+        return 'precisa logar'
+        
