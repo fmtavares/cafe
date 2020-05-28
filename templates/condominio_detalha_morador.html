@@ -27,24 +27,25 @@
     
     <main class="bloco-principal">
         
-        <h1>Listagem do Prédio</h1>
+        <h1>Detalhe do Morador</h1>
 
         <div class="bloco-tabela-moradores">
-            {% for morador in r_lista_predio %}
-            {%  set casa = morador['andar'] ~ morador['apto'] %}
-            <br>
-            <table cellpadding="0" cellspacing="0" class="tabela-moradores">
-                    <tr> 
-                        <td colspan="2" class="tabela-titulo"> <a href="/detalha_apartamento?id={{ morador['id'] }}"> {{ casa }}</a> </td> 
-                    </tr> 
-                    <tr> 
-                        <td class="tabela-linha-nome"> <a href="/detalha_apartamento?id={{ morador['id'] }}"> {{ morador['nome'] }} </a> </td> 
-
-                        <td class="tabela-linha-apelido"> <a href="/detalha_apartamento?id={{ morador['id'] }}">  {{ morador['apelido'] }} </a> </td> 
-                    </tr> 
-            </table>  
-            {% endfor %}
-        </div>
+            <div class="bloco-p1">             
+                <span class="f-titulo-morador-a"> {{ r_detalha['andar'] ~ r_detalha['apto'] }}:  </span> 
+                <span class="f-titulo-morador-b"> {{ r_detalha['apelido'] }} </span> 
+                <p class="f-img-morador"><img src="../static/imagens/{{ r_detalha['foto'] }}" /></p>
+                <p class="f-nome-morador"> {{ r_detalha['nome'] }} </p>
+                <p class="f-proprietario-morador"> ({{ r_detalha['tipo'] }}) </p>            
+                <p> Email: {{ r_detalha['email'] }} </p>
+                <p> Telefone: {{ r_detalha['telefone'] }} </p>
+                <p> Nascimento: {{ r_detalha['nascimento'] }} </p>
+                <p> Filhos? {{ r_detalha['filhos'] }} </p>
+                <p class="f-morador-sobre"> Sobre: </p>
+                <p> {{ r_detalha['sobre_voce'] }} </p>
+                <p class="f-morador-sobre"> Minha Família: </p>
+                <p> {{ r_detalha['sobre_familia'] }} </p>
+            </div>
+        </div> 
                 
     </main>
 

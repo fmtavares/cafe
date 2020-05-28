@@ -230,19 +230,25 @@ def listar_predio():
         return render_template('condominio_user_05_listar.html', r_lista_predio = r_lista_predio, user=user, admin=admin)
     else:
         return 'Precisa estar logado'
-    
-@app.route('/logout')
-def logout():
-    session.pop('user', None)
-    return redirect(url_for('index'))     
+
+
+@app.route('/detalha_apartamento', methods=['POST', 'GET'])
+def detalha_apartamento():
+    db = get_db()
+    if 'user' in session:
+        user = session['user']
+        admin = session['admin']
+        v_id = request.args.get('id')
+        cur = db.execute('select andar, apto, nome, apelido, email, telefone, nascimento, sobre_voce, sobre_familia, tipo, filhos,foto from condominio_moradores where id = ?',[v_id])
+        r_detalha = cur.fetchone()                
+        return render_template('condominio_detalha_morador.html', r_detalha = r_detalha, user=user, admin=admin)
+    else:
+        return 'Precisa estar logado'    
     
 
-@app.route('/test', methods=['POST', 'GET'])  
-def test():
-    return render_template('teste.html')
         
 @app.route('/detalha_morador', methods=['POST', 'GET'])  
-def teste():
+def detalha_morador():
     db = get_db()
     if request.method == 'GET':    
         v_id = request.args.get('id')
@@ -359,4 +365,9 @@ def admin():
             r_agenda_dia = cur.fetchall()    
 
             return render_template('condominio_admin.html', r_agenda_dia = r_agenda_dia, user=user, admin=admin)     
+
     
+@app.route('/logout')
+def logout():
+    session.pop('user', None)
+    return redirect(url_for('index'))             

@@ -1,16 +1,4 @@
-
-            {% for integrante in r_todos %}
-            {% set p_id = integrante['id']%}
-            <table cellpadding="0" cellspacing="0" class="tabela-moradores">
-                    <tr> 
-                        <td class="tabela-coluna-nome"> <a href="/detalha_morador?id={{ p_id }}"> {{ integrante['nome'] }} </a> </td> 
-                        <td class="tabela-coluna-tipo"> <a href="/detalha_morador?id={{ p_id }}"> {{ integrante['tipo'] }} </a> </td> 
-                    </tr> 
-            </table>  
-            {% endfor %}
-                        
-r_visitas
-  
+select andar,apto, andar||apto x from condominio_moradores where cast(x as int) = 122;
             
             
             
