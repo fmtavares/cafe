@@ -475,7 +475,7 @@
 }
 
 .bloco-enquete-a{
-    width: 85%;
+    width: 80%;
     text-align: left;
 }
 
@@ -485,7 +485,7 @@
 }
 
 .bloco-enquete-b{
-    width: 5%;
+    width: 10%;
     text-decoration: none;
     color: darkolivegreen;
 }
@@ -530,8 +530,8 @@
     border: 1px solid grey;
     border-radius: 10px;
     background: rgba(229, 228, 228, 0.3);
-    margin: 20px 10px;
-    width: 90%;
+    margin: 10px auto;
+    width: 95%;
     height: auto;
     padding: 0px 15px 20px 15px;
     box-sizing: border-box;
@@ -546,10 +546,11 @@
     border: 1px solid grey;
     border-radius: 10px;
     background: rgba(229, 228, 228, 0.3);
-    margin: 20px auto;
-    width: 90%;
+    margin: 10px auto;
+    width: 95%;
     height: auto;
     padding: 0px 15px 20px 15px;
+    box-sizing: border-box;
 }    
 
 .bt-enquete{
