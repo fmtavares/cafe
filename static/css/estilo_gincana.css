@@ -530,10 +530,11 @@
     border: 1px solid grey;
     border-radius: 10px;
     background: rgba(229, 228, 228, 0.3);
-    margin: 30px auto;
+    margin: 20px 10px;
     width: 90%;
     height: auto;
     padding: 0px 15px 20px 15px;
+    box-sizing: border-box;
 }    
 
 .bloco-p1 a{
@@ -695,4 +696,13 @@
 .f-espcial {
     font-size: 20px;
     color: cornflowerblue
+}
+
+.f-enquete-bloco-opcao{
+    width: 80%;
+    margin: auto;
+    text-align: left;
+}
+.f-enquete-opcao{
+    display: inline-block;
 }
