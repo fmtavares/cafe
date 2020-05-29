@@ -533,7 +533,7 @@
     margin: 30px auto;
     width: 90%;
     height: auto;
-    padding: 10px;
+    padding: 0px 15px 20px 15px;
 }    
 
 .bloco-p1 a{
@@ -548,7 +548,7 @@
     margin: 20px auto;
     width: 90%;
     height: auto;
-    padding: 10px;
+    padding: 0px 15px 20px 15px;
 }    
 
 .bt-enquete{
@@ -665,3 +665,34 @@
     font-style: italic;
 }
 
+.f-bloco-newlogin{
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.f-login-apto{
+    width: 10%;  
+    height: 20px;
+    margin-top: auto;
+    background-color: rgb(235, 235, 235);
+    border: .5px solid gray;
+    border-radius: 5px;
+    text-align: left;
+    padding-left: 5px;    
+}
+
+.f-login-senha{
+    width: 30%;  
+    height: 20px;
+    margin: auto;
+    background-color: rgb(235, 235, 235);
+    border: .5px solid gray;
+    border-radius: 5px;
+    text-align: left;
+    padding-left: 5px;    
+}
+
+.f-espcial {
+    font-size: 20px;
+    color: cornflowerblue
+}

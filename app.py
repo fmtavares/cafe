@@ -82,7 +82,36 @@ def login():
         else:   
             return 'senha invalida'
     
-    
+
+@app.route('/new_login', methods=['GET','POST'])
+def new_login():
+    db = get_db()
+    if request.method == 'GET':
+        return render_template('condominio_base.html')
+    else:
+        v_apto      = request.form['f-login-apto']
+        v_senha     = request.form['f-login-senha'] 
+        v_tipo      = 'owner'
+
+        cur = db.execute('select id, nome, andar||apto apto_morador, senha, tipo, admin from condominio_moradores where tipo = ? and cast(apto_morador as int) = ?',[v_tipo, v_apto])
+        r_morador = cur.fetchone()        
+            
+        if not r_morador:
+            return 'nao cadastrado ainda'
+        
+        if r_morador['senha'] == v_senha:
+            session['user'] = r_morador['id']
+            session['admin'] = r_morador['admin']
+            user = session['user']
+            admin = session['admin']
+            v_visible = 'y'
+            cur = db.execute('select id_pergunta, pergunta from cond_pergunta where visivel = ?', [v_visible])
+            r_perguntas = cur.fetchall()                
+            return render_template('condominio_inicio.html', r_perguntas=r_perguntas, user=user, admin=admin)        
+        else:   
+            return 'senha invalida'
+
+
 @app.route('/cadastro', methods=['POST', 'GET'])
 def cadastro():
     db = get_db()
