@@ -322,12 +322,16 @@ def cond_opcoes():
             
             cur = db.execute('select b.opcao opcao from cond_respostas a, cond_opcoes b where a.id_opcao = b.id_opcao and a.id_morador = ? and a.id_pergunta = ?', [user, v_id])
             r_morador = cur.fetchone()
+            
+            cur = db.execute('select pergunta from cond_pergunta where id_pergunta = ?', [v_id])
+            r_pergunta = cur.fetchone()
+            
             if r_morador:
                 return render_template('condominio_votacao_erro.html', r_morador=r_morador,user=user, admin=admin)
             else:
                 cur = db.execute('select id_pergunta, id_opcao, opcao from cond_opcoes where id_pergunta = ?', [v_id])
                 r_opcoes = cur.fetchall()    
-                return render_template('cond_lista_opcoes.html', r_opcoes=r_opcoes,user=user, admin=admin)
+                return render_template('cond_lista_opcoes.html', r_opcoes=r_opcoes,user=user, admin=admin, r_pergunta = r_pergunta)
     else:
         if 'user' in session:
             user = session['user']
@@ -340,9 +344,12 @@ def cond_opcoes():
             db.commit()
             
             cur = db.execute('select b.opcao opcao, count(a.id_opcao) votos from cond_respostas a, cond_opcoes b where a.id_pergunta = ? and a.id_opcao = b.id_opcao group by a.id_opcao', [v_pergunta])
-            r_enquete_placar = cur.fetchall()                
+            r_enquete_placar = cur.fetchall()
             
-            return render_template('cond_enquete_placar.html', r_enquete_placar=r_enquete_placar,user=user, admin=admin)
+            cur = db.execute('select pergunta from cond_pergunta where id_pergunta = ?', [v_pergunta])
+            r_pergunta = cur.fetchone()
+    
+            return render_template('cond_enquete_placar.html', r_enquete_placar=r_enquete_placar,user=user, admin=admin, r_pergunta = r_pergunta)
         
         
 @app.route('/cond_enquete_placar', methods=['POST', 'GET'])  
@@ -354,7 +361,9 @@ def cond_enquete_placar():
         v_pergunta = request.args.get('id')
         cur = db.execute('select b.opcao opcao, count(a.id_opcao) votos from cond_respostas a, cond_opcoes b where a.id_pergunta = ? and a.id_opcao = b.id_opcao group by a.id_opcao', v_pergunta)
         r_enquete_placar = cur.fetchall()    
-        return render_template('cond_enquete_placar.html', r_enquete_placar=r_enquete_placar,user=user, admin=admin)    
+        cur = db.execute('select pergunta from cond_pergunta where id_pergunta = ?', [v_pergunta])
+        r_pergunta = cur.fetchone()        
+        return render_template('cond_enquete_placar.html', r_enquete_placar=r_enquete_placar,user=user, admin=admin, r_pergunta = r_pergunta)    
     
 @app.route('/cond_agendar_visita', methods=['POST', 'GET'])  
 def cond_agendar_visita(): 

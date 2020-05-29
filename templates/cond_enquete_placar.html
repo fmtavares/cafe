@@ -29,6 +29,7 @@
         
         <h1>Resultado da Enquete</h1>
         <div class="bloco-resultado">
+            <p> <strong> {{ r_pergunta['pergunta'] }} </strong></p>
         {% for enquete in r_enquete_placar %}
             <div class="bloco-resultado-a">
                 <span> {{ enquete['opcao'] }} </span>

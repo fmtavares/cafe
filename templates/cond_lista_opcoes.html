@@ -31,8 +31,8 @@
 
         <div class="bloco-p1">
             
-            <h2>Qual sua escolha?</h2>
-                        
+            <h2>{{ r_pergunta['pergunta'] }}</h2>
+                     
             <form action="/cond_opcoes" method="POST">    
                 {% for opcoes in r_opcoes %}
                 <div class="f-enquete-bloco-opcao">                
