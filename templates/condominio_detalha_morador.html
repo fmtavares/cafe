@@ -28,14 +28,12 @@
     <main class="bloco-principal">
         
         <h1>Detalhe do Morador</h1>
-
-        <div class="bloco-tabela-moradores">
-            <div class="bloco-p1">             
+            <div class="bloco-p1-morador">  
                 <span class="f-titulo-morador-a"> {{ r_detalha['andar'] ~ r_detalha['apto'] }}:  </span> 
                 <span class="f-titulo-morador-b"> {{ r_detalha['apelido'] }} </span> 
                 <p class="f-img-morador"><img src="../static/imagens/{{ r_detalha['foto'] }}" /></p>
                 <p class="f-nome-morador"> {{ r_detalha['nome'] }} </p>
-                <p class="f-proprietario-morador"> ({{ r_detalha['tipo'] }}) </p>            
+                <p class="f-proprietario-morador"> ({{ r_detalha['tipo'] }}) </p>     
                 <p> Email: {{ r_detalha['email'] }} </p>
                 <p> Telefone: {{ r_detalha['telefone'] }} </p>
                 <p> Nascimento: {{ r_detalha['nascimento'] }} </p>
@@ -45,8 +43,6 @@
                 <p class="f-morador-sobre"> Minha Família: </p>
                 <p> {{ r_detalha['sobre_familia'] }} </p>
             </div>
-        </div> 
-                
     </main>
 
 </body>

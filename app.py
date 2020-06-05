@@ -7,7 +7,8 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(24)
 app.config["IMAGE_UPLOADS"] = "/Users/fabio/flask/static/imagens"
 app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["JPEG", "JPG", "PNG", "GIF"]
-#
+
+
 # conexao com o banco
 # configuracao correta 
 
@@ -54,6 +55,7 @@ def index():
         else:
             return render_template('condominio_base.html')
 
+        
 @app.route('/login', methods=['GET','POST'])
 def login():
     db = get_db()
@@ -298,7 +300,10 @@ def detalha_morador():
             db.commit()    
             return 'Atualizado com sucesso'
         
-        
+# ***************************************************
+# Parte da aplicacao das enquetes                   *
+# ***************************************************
+
 @app.route('/cond_enquete', methods=['POST', 'GET'])  
 def cond_enquete():
     db = get_db()
@@ -310,7 +315,8 @@ def cond_enquete():
             cur = db.execute('select id_pergunta, pergunta from cond_pergunta where visivel = ?', [v_visible])
             r_perguntas = cur.fetchall()    
             return render_template('cond_lista_enquete.html', r_perguntas=r_perguntas, user=user, admin=admin)
-    
+
+                
 @app.route('/cond_opcoes', methods=['POST', 'GET'])  
 def cond_opcoes(): 
     db = get_db()
@@ -331,7 +337,11 @@ def cond_opcoes():
             else:
                 cur = db.execute('select id_pergunta, id_opcao, opcao from cond_opcoes where id_pergunta = ?', [v_id])
                 r_opcoes = cur.fetchall()    
-                return render_template('cond_lista_opcoes.html', r_opcoes=r_opcoes,user=user, admin=admin, r_pergunta = r_pergunta)
+                
+                cur = db.execute('select a.nome nome, b.comentario comentario from cond_forum_enquete b, condominio_moradores a where a.id = b.id_morador and b.id_enquete = ?', [v_id])
+                r_forum = cur.fetchall()
+        
+                return render_template('cond_lista_opcoes.html', r_opcoes=r_opcoes,user=user, admin=admin, r_pergunta = r_pergunta, r_forum=r_forum)
     else:
         if 'user' in session:
             user = session['user']
@@ -346,10 +356,13 @@ def cond_opcoes():
             cur = db.execute('select b.opcao opcao, count(a.id_opcao) votos from cond_respostas a, cond_opcoes b where a.id_pergunta = ? and a.id_opcao = b.id_opcao group by a.id_opcao', [v_pergunta])
             r_enquete_placar = cur.fetchall()
             
-            cur = db.execute('select pergunta from cond_pergunta where id_pergunta = ?', [v_pergunta])
+            cur = db.execute('select id_pergunta, pergunta from cond_pergunta where id_pergunta = ?', [v_pergunta])
             r_pergunta = cur.fetchone()
     
-            return render_template('cond_enquete_placar.html', r_enquete_placar=r_enquete_placar,user=user, admin=admin, r_pergunta = r_pergunta)
+            cur = db.execute('select a.nome nome, b.comentario comentario from cond_forum_enquete b, condominio_moradores a where a.id = b.id_morador and b.id_enquete = ?', [v_pergunta])
+            r_forum = cur.fetchall()
+            
+            return render_template('cond_enquete_placar.html', r_enquete_placar=r_enquete_placar,user=user, admin=admin, r_pergunta = r_pergunta, r_forum=r_forum)
         
         
 @app.route('/cond_enquete_placar', methods=['POST', 'GET'])  
@@ -359,11 +372,41 @@ def cond_enquete_placar():
         user = session['user']
         admin = session['admin']        
         v_pergunta = request.args.get('id')
+       
         cur = db.execute('select b.opcao opcao, count(a.id_opcao) votos from cond_respostas a, cond_opcoes b where a.id_pergunta = ? and a.id_opcao = b.id_opcao group by a.id_opcao', v_pergunta)
         r_enquete_placar = cur.fetchall()    
-        cur = db.execute('select pergunta from cond_pergunta where id_pergunta = ?', [v_pergunta])
+        
+        cur = db.execute('select id_pergunta, pergunta from cond_pergunta where id_pergunta = ?', [v_pergunta])
         r_pergunta = cur.fetchone()        
-        return render_template('cond_enquete_placar.html', r_enquete_placar=r_enquete_placar,user=user, admin=admin, r_pergunta = r_pergunta)    
+        
+        cur = db.execute('select a.nome nome, b.comentario comentario from cond_forum_enquete b, condominio_moradores a where a.id = b.id_morador and b.id_enquete = ?', [v_pergunta])
+        r_forum = cur.fetchall()        
+        
+        return render_template('cond_enquete_placar.html', r_enquete_placar=r_enquete_placar,user=user, admin=admin, r_pergunta = r_pergunta, r_forum = r_forum) 
+    
+@app.route('/add_comentario_enquete', methods=['POST', 'GET'])
+def add_comentario_enquete(): 
+    db = get_db()
+    if 'user' in session:
+        user    = session['user']
+        admin   = session['admin']        
+        v_comentario  = request.form['add-com-enquete']
+        v_id_pergunta = request.form['id-pergunta-forum']
+        
+        cur = db.execute('INSERT INTO cond_forum_enquete (id_enquete, id_morador, comentario) VALUES (?,?,?)',[v_id_pergunta,user,v_comentario])
+
+        db.commit()
+
+        cur = db.execute('select b.opcao opcao, count(a.id_opcao) votos from cond_respostas a, cond_opcoes b where a.id_pergunta = ? and a.id_opcao = b.id_opcao group by a.id_opcao', [v_id_pergunta])
+        r_enquete_placar = cur.fetchall()    
+        
+        cur = db.execute('select id_pergunta, pergunta from cond_pergunta where id_pergunta = ?', [v_id_pergunta])
+        r_pergunta = cur.fetchone()        
+        
+        cur = db.execute('select a.nome nome, b.comentario comentario from cond_forum_enquete b, condominio_moradores a where a.id = b.id_morador and b.id_enquete = ?', [v_id_pergunta])
+        r_forum = cur.fetchall()        
+        
+        return render_template('cond_enquete_placar.html', r_enquete_placar=r_enquete_placar, user=user, admin=admin, r_pergunta = r_pergunta, r_forum = r_forum)                 
     
 @app.route('/cond_agendar_visita', methods=['POST', 'GET'])  
 def cond_agendar_visita(): 

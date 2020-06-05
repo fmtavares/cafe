@@ -31,22 +31,38 @@
 
         <div class="bloco-p1">
             
-            <h2>{{ r_pergunta['pergunta'] }}</h2>
+            <h2> {{ r_pergunta['pergunta'] }} </h2>
                      
             <form action="/cond_opcoes" method="POST">    
                 {% for opcoes in r_opcoes %}
-                <div class="f-enquete-bloco-opcao">                
-                <input type="hidden" id="form-enquete_pergunta" name="form-enquete_pergunta" value = " {{opcoes['id_pergunta'] }}" />                
-                
-                <input type="radio" id="form-enquete_opcao" class="f-enquete-opcao" name="form-enquete_opcao" value="{{ opcoes['id_opcao'] }}" /> 
-                <label>{{ opcoes['opcao'] }} </label>
-                {% endfor %}
-                <button type="submit" class="bt-enquete"> Votar </button>   
+                <div>
+                    <input type="hidden" id="form-enquete_pergunta" name="form-enquete_pergunta" value = " {{opcoes['id_pergunta'] }}" />                
                 </div>
+                <div>
+                    <input type="radio" id="form-enquete_opcao" name="form-enquete_opcao" value="{{ opcoes['id_opcao'] }}" /> 
+                    <label class="f-enquete-opcao">{{ opcoes['opcao'] }}</label>
+                </div>    
+                {% endfor %}
+                <button type="submit" class="bt-enquete"> Votar </button> 
             </form>    
             
         </div>
-                
+
+        <div class="bloco-p1">
+            <div class="bloco-lista-forum">
+                <p class="c-titulo-forum">Conversa do Grupo</p>
+
+                {% for forum in r_forum %}
+
+                    <p class="f-fe-morador"> {{ forum['nome'] }} </p>
+                    <p class="f-fe-comentario"> {{ forum['comentario'] }} </p>         
+
+                {% endfor %}
+            </div>        
+        </div>
+        
+        
+        
     </main>
 
 </body>

@@ -28,7 +28,7 @@
     <main class="bloco-principal">
         
         <h1>Resultado da Enquete</h1>
-        <div class="bloco-resultado">
+        <div class="bloco-p1">
             <p> <strong> {{ r_pergunta['pergunta'] }} </strong></p>
         {% for enquete in r_enquete_placar %}
             <div class="bloco-resultado-a">
@@ -41,6 +41,31 @@
         {% endfor %}
         </div>
         
+        <div class="bloco-p1">
+            
+            <div class="bloco-pergunta-forum">
+                <p class="c-titulo-forum">Mural de Debate</p>
+                <form action="/add_comentario_enquete" method="POST"> 
+
+                    <input type="hidden" id="id-pergunta-forum" name="id-pergunta-forum" value = " {{ r_pergunta['id_pergunta'] }} " />                     
+                    <textarea id="add-com-enquete" name="add-com-enquete" class="f-add-com-enquete" placeholder="digite seu comentário"> </textarea><br>
+                    <button type="submit" class="form-comentar-enquete"> Comentar </button>          
+                    
+                </form>
+            </div>
+            
+            <div class="bloco-lista-forum">
+                <p class="c-titulo-forum">Conversa do Grupo</p>
+
+                {% for forum in r_forum %}
+
+                    <p class="f-fe-morador"> {{ forum['nome'] }} </p>
+                    <p class="f-fe-comentario"> {{ forum['comentario'] }} </p>         
+
+                {% endfor %}
+            </div>
+        
+        </div>
     </main>
 
 </body>
