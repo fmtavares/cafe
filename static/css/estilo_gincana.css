@@ -788,9 +788,9 @@
 
 .c-salao-a{
     display: inline-block;
-    width: 30%;
+    width: auto;
     margin: 0px;
-    padding: 0px;
+    padding: 5px 0px 10px 10px;
     text-align: left;
 }
 
@@ -802,3 +802,19 @@
     text-align: left;
 }
 
+.c-turno{
+    margin: 0px 0px 5px 21%;
+}
+
+
+.agenda-salao-titulo{
+    background: grey;
+    width: 100%;
+    box-sizing: border-box;
+    display: block;
+    text-align: left;
+    padding: 5px 5px 5px 10px;
+    color: aliceblue;
+    border-radius: 5px;
+    margin: 0px;
+}

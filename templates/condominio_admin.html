@@ -36,12 +36,15 @@
         <div class="principal-inicial">
             <div class="bloco-p1">
                 <p> <strong>Agenda de Visitas para hoje: </strong></p>
-                
-                {% for agenda in r_agenda_dia %}
-                <p class="agenda-admin-linha-a"> Apto {{ agenda['andar'] }} {{ agenda['apto'] }} </p>
-                <span class="agenda-admin-linha-b"> Visitante: {{ agenda['visitante'] }} </span>
-                <span class="agenda-admin-linha-c"> Doc: {{ agenda['doc'] }} </span>
-                <br>
+                {% for x_apto in r_un_apto %}
+                    {% set casa = x_apto['andar'] ~ x_apto['apto'] %}
+                    <p class="agenda-admin-linha-a"> Apto {{ casa }} </p>
+                    {% for x_visitas in r_agenda_dia %}
+                        {% if x_visitas['morador'] == x_apto['morador'] %}
+                            <span class="agenda-admin-linha-b"> Visitante: {{ x_visitas['visitante'] }} </span>
+                            <span class="agenda-admin-linha-c"> Doc: {{ x_visitas['doc'] }} </span><br>
+                        {% endif %}
+                    {% endfor %}
                 {% endfor %}
             </div>
             
@@ -56,10 +59,12 @@
             <div class="bloco-p1">
                 <p> <strong> Agenda do Salão de Festas da Semana:</strong></p>
                 {% for salao in r_agenda_salao %}
-                    <div class="c-salao">
-                        <p class="c-salao-a"> {{ salao['data_reserva'] }}: </p>
-                        <p class="c-salao-b"> {{ salao['nome'] }} </p>
-                    </div>
+                {%  set casa = salao['andar'] ~ salao['apto'] %}   
+                <p class="agenda-salao-titulo"> Apto {{ casa }} </p>
+                <div class="c-salao">
+                    <p class="c-salao-a"> {{ salao['data_reserva'] }}: </p>
+                    <p class="c-salao-b"> {{ salao['nome'] }} </p>
+                </div>
                 {% endfor %}            
             </div>            
   

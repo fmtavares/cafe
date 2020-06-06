@@ -477,13 +477,17 @@ def admin():
             db = get_db()
             user = session['user']
             admin = session['admin']
-            cur = db.execute('select b.apelido morador, b.andar andar, b.apto apto, a.nome visitante, a.doc doc, a.data_visita data_visita, a.turno turno, strftime(\'%d\',a.data_visita) dia_visita, strftime(\'%m\',\'now\') mes_visita from cond_agenda_visitas a, condominio_moradores b where a.id_usuario = b.id and strftime(\'%d\',a.data_visita) = strftime(\'%d\',datetime(\'now\',\'-3 hour\')) and strftime(\'%m\',a.data_visita) = strftime(\'%m\',datetime(\'now\',\'-3 hour\')) order by a.data_visita')
+
+            cur = db.execute('select a.id_usuario morador, b.andar andar, b.apto apto, count(*) from cond_agenda_visitas a, condominio_moradores b where a.id_usuario = b.id group by a.id_usuario')
+            r_un_apto = cur.fetchall()    
+            
+            cur = db.execute('select b.id morador, b.apelido morador, b.andar andar, b.apto apto, a.nome visitante, a.doc doc, a.data_visita data_visita, a.turno turno, strftime(\'%d\',a.data_visita) dia_visita, strftime(\'%m\',\'now\') mes_visita from cond_agenda_visitas a, condominio_moradores b where a.id_usuario = b.id and strftime(\'%d\',a.data_visita) = strftime(\'%d\',datetime(\'now\',\'-3 hour\')) and strftime(\'%m\',a.data_visita) = strftime(\'%m\',datetime(\'now\',\'-3 hour\')) order by a.data_visita')
             r_agenda_dia = cur.fetchall()    
             
-            cur = db.execute('select a.nome nome, b.data_reserva data_reserva, b.turno_reserva turno_reserva, b.observacao observacao from condominio_moradores a, cond_agenda_salao b where a.id = b.id_morador and b.data_reserva >= date(\'now\') order by b.data_reserva')
+            cur = db.execute('select a.nome nome, a.andar, a.apto, b.data_reserva data_reserva, b.turno_reserva turno_reserva, b.observacao observacao from condominio_moradores a, cond_agenda_salao b where a.id = b.id_morador and b.data_reserva >= date(\'now\') order by b.data_reserva')
             r_agenda_salao = cur.fetchall()    
 
-            return render_template('condominio_admin.html', r_agenda_dia = r_agenda_dia, user=user, admin=admin, r_agenda_salao = r_agenda_salao)     
+            return render_template('condominio_admin.html', r_agenda_dia = r_agenda_dia, user=user, admin=admin, r_agenda_salao = r_agenda_salao, r_un_apto = r_un_apto)     
 
     
 @app.route('/logout')

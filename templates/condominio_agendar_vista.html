@@ -28,7 +28,7 @@
     
     <main class="bloco-principal">
         
-        <h1>Agenda de Visitas</h1>
+        <h1>Agendar Visitas</h1>
         {%  set casa = r_morador['andar'] ~ r_morador['apto'] %}
         <h2>Apartamento: {{ casa }} </h2>
         
@@ -40,20 +40,26 @@
                     <label> RG/CPF: </label>
                     <input type="text" id="form-agenda-doc" name="form-agenda-doc" class="form-cadastro-nome" /> <br>
 
-                    <label> Detalhamento: </label>
+                    <label> Obs: </label>
                     <input type="text" id="form-agenda-detalhe" name="form-agenda-detalhe" class="form-cadastro-voce" /><br>
                 
                     <label> Data: </label>
                     <input type="date" id="form-agenda-data" name="form-agenda-data" class="form-cadastro-nascimento" /> <br>                   
                 
-                    <label> Turno: </label>
-                    <input type="radio" id="form-agenda-turno" name="form-agenda-turno" class="form-cadastro-tipo" value="1" /> 
-                    <label>06-12hs </label>
-                    <input type="radio" id="form-agenda-turno" name="form-agenda-turno" class="form-cadastro-parentesco" value="2" /> 
+                    
+                    <div class="c-turno-1">
+                        <label> Turno: </label>
+                        <input type="radio" id="form-agenda-turno" name="form-agenda-turno" class="form-cadastro-tipo" value="1" /> 
+                        <label>06-12hs </label>
+                    </div>
+                    <div class="c-turno">
+                        <input type="radio" id="form-agenda-turno" name="form-agenda-turno" class="form-cadastro-parentesco" value="2" /> 
                     <label>12-18hs </label>
-                    <input type="radio" id="form-agenda-turno" name="form-agenda-turno" class="form-cadastro-parentesco" value="3" /> 
-                    <label>18-24hs </label>
-
+                    </div>
+                    <div class="c-turno">
+                        <input type="radio" id="form-agenda-turno" name="form-agenda-turno" class="form-cadastro-parentesco" value="3" /> 
+                        <label>18-24hs </label>
+                    </div>
                 
                     <button type="submit" class="form-cadastro-butao"> Agendar </button>          
             </form>            
