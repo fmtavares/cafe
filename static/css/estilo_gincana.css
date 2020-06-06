@@ -486,6 +486,7 @@
 .bloco-enquete-b a{
     text-decoration: none;
     color: inherit;
+    font-size: 18px;
 }
 
 .bloco-enquete-b{
@@ -498,6 +499,7 @@
 .bloco-enquete-c a{
     text-decoration: none;
     color: inherit;
+    font-size: 18px;
 }
 
 .bloco-enquete-c{
@@ -735,7 +737,7 @@
 .c-titulo-forum{
     background: #cecdcd;
     display: block;
-    width: 35%;
+    width: 40%;
     margin: 10px auto;
     border-radius: 3px;
     padding: 2px 0px 2px 0px;
@@ -805,7 +807,6 @@
 .c-turno{
     margin: 0px 0px 5px 21%;
 }
-
 
 .agenda-salao-titulo{
     background: grey;
