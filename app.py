@@ -435,6 +435,41 @@ def cond_agendar_visita():
     else:
         return 'precisa logar'
 
+# ***************************************************************
+# Agenda do Salaao de Festa                                     *
+# ***************************************************************
+    
+@app.route('/cond_agendar_salao', methods=['POST', 'GET'])  
+def cond_agendar_salao(): 
+    db = get_db()
+    if 'user' in session:
+        user = session['user']
+        admin = session['admin']        
+        if request.method == 'POST':    
+            v_detalhe   = request.form['form-agenda-detalhe']
+            v_data      = request.form['form-agenda-data']
+            v_turno     = request.form['form-agenda-turno']
+            
+            cur = db.execute('insert into cond_agenda_salao (id_morador, data_reserva, turno_reserva, observacao) values (?,?,?,?)',[user,v_data,v_turno,v_detalhe])
+            
+            db.commit()
+        
+        cur  = db.execute('select andar, apto from condominio_moradores where id=?',[user])
+        r_morador = cur.fetchone()         
+        
+        cur_visitas  = db.execute('select id_morador,data_reserva,turno_reserva,observacao from cond_agenda_salao where id_morador=?',[user])
+        r_visitas = cur_visitas.fetchall()         
+        
+        return render_template('condominio_agendar_salao.html',user=user, admin=admin, r_morador=r_morador, r_visitas=r_visitas)
+    else:
+        return 'precisa logar'
+    
+    
+    
+# ***************************************************************
+# Administracao da Pagina
+# ***************************************************************
+    
 @app.route('/admin', methods=['GET','POST'])
 def admin():
     if request.method == 'GET':
@@ -444,8 +479,11 @@ def admin():
             admin = session['admin']
             cur = db.execute('select b.apelido morador, b.andar andar, b.apto apto, a.nome visitante, a.doc doc, a.data_visita data_visita, a.turno turno, strftime(\'%d\',a.data_visita) dia_visita, strftime(\'%m\',\'now\') mes_visita from cond_agenda_visitas a, condominio_moradores b where a.id_usuario = b.id and strftime(\'%d\',a.data_visita) = strftime(\'%d\',datetime(\'now\',\'-3 hour\')) and strftime(\'%m\',a.data_visita) = strftime(\'%m\',datetime(\'now\',\'-3 hour\')) order by a.data_visita')
             r_agenda_dia = cur.fetchall()    
+            
+            cur = db.execute('select a.nome nome, b.data_reserva data_reserva, b.turno_reserva turno_reserva, b.observacao observacao from condominio_moradores a, cond_agenda_salao b where a.id = b.id_morador and b.data_reserva >= date(\'now\') order by b.data_reserva')
+            r_agenda_salao = cur.fetchall()    
 
-            return render_template('condominio_admin.html', r_agenda_dia = r_agenda_dia, user=user, admin=admin)     
+            return render_template('condominio_admin.html', r_agenda_dia = r_agenda_dia, user=user, admin=admin, r_agenda_salao = r_agenda_salao)     
 
     
 @app.route('/logout')

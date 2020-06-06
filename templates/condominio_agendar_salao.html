@@ -28,25 +28,44 @@
     
     <main class="bloco-principal">
         
-        <h1>Listagem do Prédio</h1>
-
+        <h1>Agendar Salão Festas</h1>
+        {%  set casa = r_morador['andar'] ~ r_morador['apto'] %}
+        <h2>Apartamento: {{ casa }} </h2>
+        
+        <div>
+            <form action="/cond_agendar_salao" method="POST" class="form-cadastro">    
+                                
+                    <label> Data: </label>
+                    <input type="date" id="form-agenda-data" name="form-agenda-data" class="form-cadastro-nascimento" /> <br>                   
+                    <label> Turno: </label>
+                    <input type="radio" id="form-agenda-turno" name="form-agenda-turno" class="form-cadastro-tipo" value="1" /> 
+                    
+                    <label>Dia </label>
+                    <input type="radio" id="form-agenda-turno" name="form-agenda-turno" class="form-cadastro-parentesco" value="2" /> 
+                    <label>Noite </label>
+                    <br>
+    
+                    <label> Detalhamento: </label>
+                    <input type="text" id="form-agenda-detalhe" name="form-agenda-detalhe" class="form-cadastro-voce" /><br>
+                    
+                    <button type="submit" class="form-cadastro-butao"> Agendar </button>          
+            </form>            
+        </div>
+        
         <div class="bloco-tabela-moradores">
-            {% for morador in r_lista_predio %}
-            {%  set casa = morador['andar'] ~ morador['apto'] %}
-            <br>
+
+
+            {% for visita in r_visitas %}
             <table cellpadding="0" cellspacing="0" class="tabela-moradores">
                     <tr> 
-                        <td colspan="2" class="tabela-titulo"> <a href="/detalha_apartamento?id={{ morador['id'] }}"> {{ casa }}</a> </td> 
+                        <td class="bloco-r-visita-a"> {{ visita['data_reserva'] }} </td> 
+                        <td class="bloco-r-visita-b"> {{ visita['turno_reserva'] }} </td> 
                     </tr> 
-                    <tr> 
-                        <td class="tabela-linha-nome"> <a href="/detalha_apartamento?id={{ morador['id'] }}"> {{ morador['nome'] }} </a> </td> 
-
-                        <td class="tabela-linha-apelido"> <a href="/detalha_apartamento?id={{ morador['id'] }}">  {{ morador['apelido'] }} </a> </td> 
-                    </tr> 
-            </table>  
+            </table>              
             {% endfor %}
+                        
         </div>
-                
+        
     </main>
 
 </body>

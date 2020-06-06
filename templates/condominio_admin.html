@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../static/css/estilo_gincana.css">
+    <script src="https://kit.fontawesome.com/06221f8d00.js" crossorigin="anonymous"></script>
 </head>
     
 <body>
@@ -50,18 +51,20 @@
                 <p> + Academia liderada</p>
                 <p> + Permitido fazer churrasco no playgound</p>
                 
-            </div>
+            </div>            
             
             <div class="bloco-p1">
                 <p> <strong> Agenda do Salão de Festas da Semana:</strong></p>
-                <p> + Sexta-Feira: Reservado para 122, festa com moradores do predio para comemorar independência do condominio</p>
-                <p> + Sábado: Salão reservado para reunião do condominio</p>
+                {% for salao in r_agenda_salao %}
+                    <div class="c-salao">
+                        <p class="c-salao-a"> {{ salao['data_reserva'] }}: </p>
+                        <p class="c-salao-b"> {{ salao['nome'] }} </p>
+                    </div>
+                {% endfor %}            
             </div>            
-
+  
         </div>
-        
     </main>
-
 </body>
 
 </html>
